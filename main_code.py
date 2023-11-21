@@ -12,3 +12,5 @@ print(pixels[1])
 
 
 
+
+
