@@ -15,9 +15,9 @@ class Pixels:
         self.lenght,self.height = self.image.size   
 
 
-    def save_image(self):
+    def save_image(self,new_image_name):
         """
-        Cette fonction sauvegarde l'image
+        Cette fonction sauvegarde la nouvelle image
 
         Args:
         self : l'image
@@ -25,7 +25,7 @@ class Pixels:
         Returns:
         none
         """
-        self.image.save("new"+self.image_name )
+        self.image.save(new_image_name)
 
     def change_value(self,x,y,new_value):
         """
@@ -42,12 +42,17 @@ class Pixels:
             for j in range(self.height):
                 for color in range(3):
                     if self.values[i,j][color]%2 != 0:
-                        print("a")
                         list_temp = list(self.values[i,j])
                         list_temp[color] += -1
                         self.values[i,j] = tuple(list_temp)
         
+class Encoding:
+    def __init__(self,image_name,new_image_name):
+        self.pixels = Pixels(image_name)
 
+    
+    
+class Decoding:
 
 
 
@@ -56,11 +61,11 @@ if __name__ == '__main__':
     before=list([[[pix.values[i,j][color] for color in range(3)] for i in range(pix.lenght)]]for j in range(pix.height))
     pix.set_to_even()
     after=list([[[pix.values[i,j][color] for color in range(3)] for i in range(pix.lenght)]]for j in range(pix.height))
-    #temp=([[pix.values[i,j][color] for color in range(3)] for i in range(pix.lenght)] for j in range(pix.height))
+    
     print(before)
     print(after)
 
-    pix.save_image()
+    pix.save_image("newRed_square.png")
 
     
         
