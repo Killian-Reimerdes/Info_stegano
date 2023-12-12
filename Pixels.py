@@ -34,7 +34,7 @@ class Pixels:
                  
         """                  
         self.values[x,y] = new_value
-    
+    def set_to_even(self,color:int):
         """
         Cette fonction arondie toutes les valeurs des pixels au chiffre paire le plus proche vers le bas
         """
@@ -67,13 +67,19 @@ if __name__ == '__main__':
     #test class pixel
     pix = Pixels("Red_square.png")
     before=list([[[pix.values[i,j][color] for color in range(3)] for i in range(pix.lenght)]]for j in range(pix.height))
-    pix.set_to_even()
-    after=list([[[pix.values[i,j][color] for color in range(3)] for i in range(pix.lenght)]]for j in range(pix.height))
-    
-    print(before)
+    pix.set_to_even(0)
+    pix.set_to_uneven(1)
+    pix.set_to_uneven(2)
+    after=[[[[pix.values[i,j][color] for color in range(3)] for i in range(pix.lenght)]]for j in range(pix.height)]
+    for i in range(pix.height):
+        for j in range(pix.lenght):
+            assert pix.values[i,j][0]%2==0
+            assert pix.values[i,j][1]%2==1
+            assert pix.values[i,j][2]%2==1
+    # print(before)
     print(after)
 
-    pix.save_image("newRed_square.png")
+    #pix.save_image("newRed_square.png")
     
     
     
