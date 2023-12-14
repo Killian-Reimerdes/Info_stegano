@@ -1,10 +1,10 @@
-
-def find_code_encododage()
+def find_code_encododage():
+     
 
 def test_func_dec(self,color:int):
-        for i in range(self.pixels.lenght):
-            for j in range(self.pixels.height):
-                self.pixels.values[i,j][color]+=-1
+    for i in range(self.pixels.lenght):
+        for j in range(self.pixels.height):
+            self.pixels.values[i,j][color]+=-1
 
 def Decoding(image_name):
     """
