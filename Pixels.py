@@ -77,7 +77,7 @@ if __name__ == '__main__':
             assert pix.values[i,j][1]%2==1
             assert pix.values[i,j][2]%2==1
     # print(before)
-    print(after)
+    # print(after)
 
     #pix.save_image("newRed_square.png")
     

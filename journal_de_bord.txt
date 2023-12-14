@@ -1,9 +1,16 @@
 Idee pour encodage
     -choisi nombre en binaire aleatoirement, chaque chiffre represente un module d'encryotage (1 pour allume , 0 pour desactive).
     Ce nombre estecrit(encrypter ou pas) sru un endroit precis de l'image genre diagonale, debut ou une couche specifique
+    -choix aleatoire de si on code sur une couche de base pair ou impair
 
 Idee de cellule de cryptage:
     -prend la parite de tout les n-ieme valeurs et la force sur les n-1 prochaines.
     On peut ecrire en binaire sur la parite des n-1 valeurs.
     - on peut prendre le changement de parite comme code binaire (ca change=1, change pas =0)
     -
+
+
+
+->12 Décembre, Killian:
+    -class pixels
+    -base des fonction Encoding et Decoding
