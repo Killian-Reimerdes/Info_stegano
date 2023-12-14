@@ -1,10 +1,16 @@
 class Encoding:
-    def __init__(self,image_name,new_image_name):
+    def __init__(self,image_name,new_image_name,message):
         
+        #message à cacher dans l'image
+        self.message = message
+        
+        #nom de la nouvelle image
+        self.new_name = new_image_name
         #cree un objet de la class pixles de l'image 
         self.pixels = Pixels(image_name)
         #decide si on encode sur une base pair ou impair (une valuer par couleur)
-        self.encode_layer = ([randint(0,2)]for i in range(3))
+        #self.encode_layer = ([randint(0,2)]for i in range(3))
+        self.encode_layer = [0,0,0]
         #met tout nos pixel a la valuer pair ou impair voulu
         for i in range(3):
             if self.encode_layer[i]==1:
@@ -14,9 +20,10 @@ class Encoding:
 
 
         #liste de toute les cellules d'encodage possible
-        self.functions =["test_func","another_function"]
+        self.functions =["test_func"]
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
-        self.code_encodage = ([randint(0,2)] for i in range(len(self.functions)))
+        #self.code_encodage = ([randint(0,2)] for i in range(len(self.functions)))
+        self.code_encodage = [1]
 
     def test_func_enc(self,color:int):
         
@@ -29,7 +36,7 @@ class Encoding:
 
     def encode(self):
         """
-        encode le message dans l'image
+        encode le message dans l'image 
         """
         for func,i in enumerate(self.functions):
             if self.code_encodage[i]==1:
