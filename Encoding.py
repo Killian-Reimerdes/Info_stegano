@@ -1,3 +1,6 @@
+from Pixels import Pixels
+
+
 class Encoding:
     def __init__(self,image_name,new_image_name,message):
         
@@ -14,9 +17,9 @@ class Encoding:
         #met tout nos pixel a la valuer pair ou impair voulu
         for i in range(3):
             if self.encode_layer[i]==1:
-                self.pixels.set_to_uneven()
+                self.pixels.set_to_uneven(i)
             else:
-                self.pixels.set_to_even()
+                self.pixels.set_to_even(i)
 
 
         #liste de toute les cellules d'encodage possible
@@ -29,7 +32,10 @@ class Encoding:
         
         for i in range(self.pixels.lenght):
             for j in range(self.pixels.height):
-                self.pixels.values[i,j][color]+=1
+                temp_list =list(self.pixels.values[i,j])
+                temp_list[color]+=1
+                self.pixels.values[i,j]=tuple(temp_list)
+
 
     
         
@@ -38,9 +44,11 @@ class Encoding:
         """
         encode le message dans l'image 
         """
-        for func,i in enumerate(self.functions):
-            if self.code_encodage[i]==1:
-                eval(func())
+        for color in range(3):
+        
+            for i,func in enumerate(self.functions):
+                if self.code_encodage[i]==1:
+                    eval("self."+func+"_enc("+str(color)+")")
 
 
 

@@ -28,11 +28,28 @@ def test_func_dec(im : Pixels ,color:int):
 Sortir le message en binaire et le passer en string
 
 """
-def extract_message(im : Pixels):
+def extract_message(im : Pixels,encode_layer:list):
+    for color in range(3):
+        if encode_layer[color]==1:
+            for x in range(im.lenght):
+                for y in range(im.height):
+                    im.values[x,y]+=-1
+    message_in_binairy = "0b"
+    
+    for color in range(3):
+        for i in range(im.lenght):
+            for j in range(im.height):
+                if im.values[i,j][color]%2==0:
+                    message_in_binairy+="0"
+                else:
+                    message_in_binairy+="1"
 
     return message_in_binairy
 
-def translate_to_text(message_in_binairy)
+def translate_to_text(message_in_binairy):
+    #https://www.askpython.com/python/built-in-methods/convert-binary-string-to-normal-string
+    num = int(message_in_binairy, 2)
+    message = num.to_bytes((num.bit_length() + 7) // 8, 'big').decode('ascii')
     
     return message
 
@@ -56,22 +73,22 @@ def Decode(image_name):
 
     #trouver le code d'encodage
 
-    code_enodage=find_code_encododage()
+    code_encodage = find_code_encododage(im)
 
     
 
     #appliquer les foncdtion de decodage
     functions =["test_func"] #ne pas oublieer de mettre a jour
     
-    for func,i in enumerate(functions):
+    for i,func in enumerate(functions):
         if code_encodage[i]==1:
             eval(func+"_dec")
 
     #trouver la parite des couches encoder
-    encode_layer = find_encoded_layer
+    encode_layer = find_encoded_layer(im)
     
     #sortir le message en binaire
-    message_in_binairy = extract_message(im)
+    message_in_binairy = extract_message(im,encode_layer)
     
     #passer le message en string
     message = translate_to_text(message_in_binairy)
