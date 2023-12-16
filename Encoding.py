@@ -38,6 +38,7 @@ class Encoding:
     
     def message_to_bin(self):
         mess_bin = []
+        
         for letter in self.message:
             mess_bin.append(bin(ord(letter)))
         self.message_bin = mess_bin
@@ -93,5 +94,6 @@ if __name__ == '__main__':
     enc = Encoding("real_Red_square.png","real_newRed_square.png","Test")
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
     enc.write_message(0)
+    
     
     print("ca marche pour l'instant")

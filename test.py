@@ -9,3 +9,6 @@ func = "test_func"
 tst = test(0)
 eval("tst."+func+"()")
 print(tst.number)
+print(chr(0b1010100))
+esgeg="1243251343"
+assert esgeg[0] == "1"
