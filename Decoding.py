@@ -42,6 +42,7 @@ def extract_message(im : Pixels,encode_layer:list):
                 if im.values[i,j][color]%2==0:
                     message_in_binairy+="0"
                 else:
+                    
                     message_in_binairy+="1"
 
     return message_in_binairy
@@ -49,9 +50,9 @@ def extract_message(im : Pixels,encode_layer:list):
 def translate_to_text(message_in_binairy):
     #https://www.askpython.com/python/built-in-methods/convert-binary-string-to-normal-string
     num = int(message_in_binairy, 2)
-    message = num.to_bytes((num.bit_length() + 7) // 8, 'big').decode('ascii')
+    str1 = num.to_bytes((num.bit_length() + 7) // 8, 'big').decode('ascii')
     
-    return message
+    return str1
 
 
 """
@@ -92,7 +93,7 @@ def Decode(image_name):
     
     #passer le message en string
     message = translate_to_text(message_in_binairy)
-    
+    print(len(message))
     #rend le message
     return message
             
@@ -106,4 +107,5 @@ if __name__ == '__main__':
     im.encode()
     im.pixels.save_image(im.new_name)
     decodede_message = Decode(im.new_name)
+    print(decodede_message)
     assert decodede_message == im.message
