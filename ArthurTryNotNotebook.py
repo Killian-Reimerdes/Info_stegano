@@ -3,7 +3,7 @@
 from PIL import Image
 
 imart = Image.new("RGB", (100,100),(100, 200, 15)) #tout doit être des tuples
-#imart.show()
+imart.show()
 
 size = imart.size
 color = imart.mode

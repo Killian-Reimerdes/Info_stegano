@@ -14,3 +14,10 @@ Idee de cellule de cryptage:
 ->12 Décembre, Killian:
     -class pixels
     -base des fonction Encoding et Decoding
+
+-> 18 Décembre, Arthur: 
+    - premier commit d'Arthur, mini testes comment changer pixels d'image 
+- > 21 Décembre, Arthur:
+    - En salle info, Emilien m'explique la base de quelques fonction for(width x height):
+    - tjrs changer tuple en liste puis denouveau tuple  
+- > 22 Décembre, Arthur:
