@@ -21,3 +21,4 @@ Idee de cellule de cryptage:
     - En salle info, Emilien m'explique la base de quelques fonction for(width x height):
     - tjrs changer tuple en liste puis denouveau tuple  
 - > 22 Décembre, Arthur:
+    - Notebook cesar 1 decodage bien compris (j'estime que le notebook cryptage est une étape nécessaire pour comprendre la stegano)
