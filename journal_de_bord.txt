@@ -22,3 +22,8 @@ Idee de cellule de cryptage:
     - tjrs changer tuple en liste puis denouveau tuple  
 - > 22 Décembre, Arthur:
     - Notebook cesar 1 decodage bien compris (j'estime que le notebook cryptage est une étape nécessaire pour comprendre la stegano)
+--> 24 Décembre, Arthur:
+	- fonction qui prend une lettre (str) et return (str) son ascii en binaire
+--> 26 Décembre, Arthur: 
+	- fonction qui prend comme argument une string et return pour chaque lettre, l'ascii (str) en binaire. Toutes ces valeurs ascii en binaire 
+	forment une liste qui se fait return à la fin de la fonction.
