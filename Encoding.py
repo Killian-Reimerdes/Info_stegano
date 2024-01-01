@@ -85,6 +85,9 @@ class Encoding:
             for i,func in enumerate(self.functions):
                 if self.code_encodage[i]==1:
                     eval("self."+func+"_enc("+str(color)+")")
+        
+        self.message_to_bin()
+        self.write_message(0)
 
 
 
@@ -94,6 +97,8 @@ if __name__ == '__main__':
     enc = Encoding("real_Red_square.png","real_newRed_square.png","Test")
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
     enc.write_message(0)
+   
+
     
     
     print("ca marche pour l'instant")

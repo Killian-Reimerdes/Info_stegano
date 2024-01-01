@@ -70,7 +70,7 @@ def translate_to_text(message_in_binairy:str):
     
     
     
-    return message
+    return str1
 
 
 """
@@ -111,7 +111,7 @@ def Decode(image_name):
     
     #passer le message en string
     message = translate_to_text(message_in_binairy)
-    
+    print(len(message))
     #rend le message
     return message
             
@@ -139,3 +139,6 @@ if __name__ == '__main__':
     # assert decodede_message == im.message
     
     print("putain ca marche")
+    decodede_message = Decode(im.new_name)
+    print(decodede_message)
+    assert decodede_message == im.message
