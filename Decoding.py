@@ -70,7 +70,7 @@ def translate_to_text(message_in_binairy:str):
     
     
     
-    return str1
+    return message
 
 
 """
@@ -130,15 +130,15 @@ if __name__ == '__main__':
     im.pixels.save_image(im.new_name)
     message_in_binairy = extract_message(im.pixels,0,[0,0,0])
     print(message_in_binairy[:10])
-    #decodede_message = Decode(im.new_name)
+    decodede_message = Decode(im.new_name)
     
 
-    # encode_layer = find_encoded_layer(im)
-    # message_in_binairy = extract_message(im.pixels,0,encode_layer)
-    # print(message_in_binairy[:50])
-    # assert decodede_message == im.message
-    
-    print("putain ca marche")
-    decodede_message = Decode(im.new_name)
-    print(decodede_message)
+    encode_layer = find_encoded_layer(im)
+    message_in_binairy = extract_message(im.pixels,0,encode_layer)
+    print(message_in_binairy[:50])
     assert decodede_message == im.message
+    
+    print("putain ca marche ")
+    # decodede_message = Decode(im.new_name)
+    # print(decodede_message)
+    # assert decodede_message == im.message

@@ -50,26 +50,33 @@ class Encoding:
                 print("message too long")
             else:
                 code = []
-                for i in self.message_bin:
-                    for bit in i[2:]:
+                for byt in self.message_bin:
+                    bits = byt[2:]
+                    while len(bits)<8:
+                        bits = "0"+ bits
+                    for bit in bits:
                         code.append(bit)
                 x,y = 0,0    
                 for i in code:
-                    if i == 1:
+                    
+                    if i == "1":
                         if self.pixels.values[x,y][color]==255:
                             temp_list = list(self.pixels.values[x,y])
                             temp_list[color] = 0
                             self.pixels.values[x,y]=tuple(temp_list)
+                            
                         else:
                             temp_list = list(self.pixels.values[x,y])
-                            temp_list[color]+=1
+                            temp_list[color] +=1
                             self.pixels.values[x,y]=tuple(temp_list)
+                            
                     if x == self.pixels.lenght:
                         x=0
                         y += 1
                     else:
                         x += 1 
-
+        else:
+            print("pas de message en binaire")
                     
 
 
@@ -85,20 +92,21 @@ class Encoding:
             for i,func in enumerate(self.functions):
                 if self.code_encodage[i]==1:
                     eval("self."+func+"_enc("+str(color)+")")
-        
-        self.message_to_bin()
-        self.write_message(0)
+        self.write_message()
 
 
 
 
 if __name__ == '__main__':
-    unchanged = Encoding("real_Red_square.png","real_newRed_square.png","no message")
-    enc = Encoding("real_Red_square.png","real_newRed_square.png","Test")
+    #unchanged = Encoding("blank.png","new_blank","no message")
+    enc = Encoding("blank.png","new_blank.png","Test")
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
-    enc.write_message(0)
-   
-
     
+    enc.write_message(0)
+    encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1]
+    for i in range(16):
+        #print(enc.pixels.values[i,0][0])
+        assert enc.pixels.values[i,0][0]==encoeded_message[i]
+    enc.pixels.save_image("encoded_blank.png")
     
     print("ca marche pour l'instant")

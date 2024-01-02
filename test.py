@@ -1,3 +1,4 @@
+from Pixels import Pixels
 # class test:
 #     def __init__(self,number):
 #         self.number = number
@@ -11,7 +12,12 @@
 # eval("tst."+func+"()")
 # print(tst.number)
 
-
+blank = Pixels("real_newRed_square.png")
+for i in range(blank.height):
+    for j in range(blank.lenght):
+        for x in range(3):
+            blank.values[j,i]=(0,0,0)
+blank.save_image("blank.png")
 
 bins="0100100001100101011011000110110001101111001000000101011101101111011100100110110001100100"
 num = int(bins, 2)
