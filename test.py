@@ -26,3 +26,8 @@ print("The normal string is :", str1)
 type(str1)
 
 
+tst = "0200000000"
+tst = tst[:-8]
+print(tst)
+
+

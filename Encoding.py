@@ -70,7 +70,7 @@ class Encoding:
                             temp_list[color] +=1
                             self.pixels.values[x,y]=tuple(temp_list)
                             
-                    if x == self.pixels.lenght:
+                    if x == self.pixels.lenght-1:
                         x=0
                         y += 1
                     else:
@@ -88,11 +88,13 @@ class Encoding:
         """
         encode le message dans l'image 
         """
-        for color in range(3):
-            for i,func in enumerate(self.functions):
-                if self.code_encodage[i]==1:
-                    eval("self."+func+"_enc("+str(color)+")")
-        self.write_message()
+        # for color in range(3):
+        #     for i,func in enumerate(self.functions):
+        #         if self.code_encodage[i]==1:
+        #             eval("self."+func+"_enc("+str(color)+")")
+        # pas encore utile pour l'instant
+        self.message_to_bin()
+        self.write_message(0)
 
 
 
@@ -103,7 +105,7 @@ if __name__ == '__main__':
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
     
     enc.write_message(0)
-    encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1]
+    encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0]
     for i in range(16):
         #print(enc.pixels.values[i,0][0])
         assert enc.pixels.values[i,0][0]==encoeded_message[i]

@@ -29,26 +29,38 @@ Sortir le message en binaire et le passer en string
 
 """
 def extract_message(im : Pixels,color,encode_layer):
-    
+    #corrige si on encode sur une couche impaire
     if encode_layer[color]==1:
         for x in range(im.lenght):
             for y in range(im.height):
                 im.values[x,y]+=-1
-    message_in_binairy = "0b"
+    
+    message_in_binairy = ""
     zero_counter=0
-    for i in range(im.lenght):
-        for j in range(im.height):
-            
-            if im.values[i,j][color]%2<0.001:
-                
-                message_in_binairy+="0"
-                zero_counter+=1
-                if zero_counter>15:
-                    return message_in_binairy
-            else:
-                message_in_binairy+="1"
-                zero_counter=0
+    x,y = 0,0
+    while zero_counter<24:  #arret la lecture apres 16 zero d'affile
+        
+        message_in_binairy += str(int(im.values[x,y][color]%2))
 
+        if message_in_binairy[-1]=="0":
+            zero_counter += 1
+        else:
+            zero_counter = 0
+
+        if x >= im.lenght-1:
+            x = 0
+            y += 1
+            if y >= im.height:
+                return message_in_binairy
+        else:
+            x += 1
+    message_in_binairy = message_in_binairy [:-16]
+    while len(message_in_binairy)%8 > 0.1 :
+        
+        message_in_binairy = message_in_binairy[:-1]
+
+        
+        
     return message_in_binairy
 
 def translate_to_text(message_in_binairy:str):
@@ -111,7 +123,7 @@ def Decode(image_name):
     
     #passer le message en string
     message = translate_to_text(message_in_binairy)
-    print(len(message))
+    #print(len(message))
     #rend le message
     return message
             
@@ -122,23 +134,27 @@ def Decode(image_name):
 if __name__ == '__main__':
     test = '01010100011001010111001101110100'
     assert (translate_to_text(test) == 'Test')
+    print("bin to text works")
+
+
+    pix = Pixels("encoded_blank.png")
+    message = extract_message(pix,0,[0,0,0])
+    encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0]
+    assert message == "01010100011001010111001101110100"
+    print('extract message works')
 
 
 
-    im= Encoding("real_Red_square.png","real_newRed_square.png","Test")# a changer
+    #test du systeme complet
+    im= Encoding("real_Red_square.png","real_newRed_square.png","Au commencement, Dieu créa le ciel et la terre. La terre était informe et vide, il y avait des ténèbres au-dessus de l'abîme, et l'esprit du Seigneur planait au-dessus des eaux.")# a changer
     im.encode()
     im.pixels.save_image(im.new_name)
-    message_in_binairy = extract_message(im.pixels,0,[0,0,0])
-    print(message_in_binairy[:10])
-    decodede_message = Decode(im.new_name)
-    
+    print(im.pixels.lenght)
 
-    encode_layer = find_encoded_layer(im)
-    message_in_binairy = extract_message(im.pixels,0,encode_layer)
-    print(message_in_binairy[:50])
-    assert decodede_message == im.message
     
+    Decodede_message = Decode(im.new_name)
+    print(Decodede_message)
+    
+    assert Decodede_message == im.message
+
     print("putain ca marche ")
-    # decodede_message = Decode(im.new_name)
-    # print(decodede_message)
-    # assert decodede_message == im.message
