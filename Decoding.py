@@ -47,8 +47,10 @@ def func_1_dec(im : Pixels,color:int):
 Sortir le message en binaire et le passer en string
 
 """
-def extract_message(im : Pixels,color,encode_layer):
+def extract_message(im : Pixels,encode_layer):
     #corrige si on encode sur une couche impaire
+    color = 0
+    
     if encode_layer[color]==1:
         for x in range(im.lenght):
             for y in range(im.height):
@@ -59,12 +61,13 @@ def extract_message(im : Pixels,color,encode_layer):
     message_in_binairy = ""
     zero_counter=0
     x,y = 0,0
-    while zero_counter<24:  #arret la lecture apres 16 zero d'affile
-        
+    while  zero_counter<24:  #arret la lecture apres 16 zero d'affile
+            
         message_in_binairy += str(int(im.values[x,y][color]%2))
 
         if message_in_binairy[-1]=="0":
             zero_counter += 1
+                
         else:
             zero_counter = 0
 
@@ -72,9 +75,20 @@ def extract_message(im : Pixels,color,encode_layer):
             x = 0
             y += 1
             if y >= im.height:
-                return message_in_binairy
+                color += 1
+                if color >= 3 :
+                    return message_in_binairy
+                if encode_layer[color]==1:
+                    for a in range(im.lenght):
+                        for b in range(im.height):
+                            temp_list = list(im.values[a,b])
+                            temp_list[color] += -1
+                            im.values[a,b] = tuple(temp_list)
+                        
         else:
             x += 1
+
+    #crop les zero inutile            
     message_in_binairy = message_in_binairy [:-16]
     while len(message_in_binairy)%8 > 0.1 :
         
@@ -141,7 +155,7 @@ def Decode(image_name):
     encode_layer = find_encoded_layer(im)
     
     #sortir le message en binaire
-    message_in_binairy = extract_message(im,0,encode_layer)
+    message_in_binairy = extract_message(im,encode_layer)
     
     #passer le message en string
     message = translate_to_text(message_in_binairy)
@@ -160,7 +174,7 @@ if __name__ == '__main__':
 
 
     pix = Pixels("encoded_blank.png")
-    message = extract_message(pix,0,[0,0,0])
+    message = extract_message(pix,[0,0,0])
     encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0]
     assert message == "01010100011001010111001101110100"
     print('extract message works')

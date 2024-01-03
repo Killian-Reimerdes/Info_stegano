@@ -62,11 +62,12 @@ class Encoding:
         self.message_bin = mess_bin
         return mess_bin
     
-    def write_message(self,color):
+    def write_message(self):
         if self.message_bin != []:
-            if len(self.message)>(self.pixels.height * self.pixels.lenght):
+            if len(self.message)>(self.pixels.height * self.pixels.lenght * 3):
                 print("message too long")
             else:
+                color = 0
                 code = []
                 for byt in self.message_bin:
                     bits = byt[2:]
@@ -91,6 +92,9 @@ class Encoding:
                     if x == self.pixels.lenght-1:
                         x=0
                         y += 1
+                        if y >= self.pixels.height:
+                            color +=1 
+                            y = 0
                     else:
                         x += 1 
         else:
@@ -107,7 +111,7 @@ class Encoding:
         ecrit et encode le message dans l'image 
         """
         self.message_to_bin()
-        self.write_message(0)
+        self.write_message()
         
         for color in range(3):
             for i,func in enumerate(self.functions):
@@ -124,15 +128,24 @@ if __name__ == '__main__':
     enc = Encoding("blank.png","new_blank.png","Test")
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
     print("message_to_bin marche")
-    enc.write_message(0)
-    encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0]
-    for i in range(16):
+    enc.write_message()
+    encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,0,1,1,0,1,1,1,0,1,0,0]
+    for i in range(32):
         #print(enc.pixels.values[i,0][0])
         assert enc.pixels.values[i,0][0]==encoeded_message[i]
     enc.pixels.save_image("encoded_blank.png")
     print("l'ecriture marche ")
     
+    
+
+    enc.func_1_enc(0)
+    for i in range(32):
+        assert enc.pixels.values[i,0][0]==[0,1,1,2,0,1,1,1,1,2,1,1,1,2,0,1,1,2,1,2,0,0,1,2,0,1,2,1,1,2,0,0][i]
+       
+    print("func 1 fonctionne")
+
+    #pour test decoding
     enc2 = Encoding("blank.png","new_blank.png","Test")
     enc2.encode()
-
+    
     print("ca marche pour l'instant")
