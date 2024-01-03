@@ -2,7 +2,7 @@ from Pixels import Pixels
 from Encoding import Encoding
 
 def find_code_encododage(im : Pixels):
-    code_encododage = [1]
+    code_encododage = [[1,0,1]]
     return code_encododage
 
 def find_encoded_layer(im:Pixels):
@@ -20,7 +20,12 @@ Fonctions de décodage
 def test_func_dec(im : Pixels ,color:int):
     for i in range(im.lenght):
         for j in range(im.height):
-            im.values[i,j][color]+=-1
+            temp_list=list(im.values[i,j])
+            if temp_list[color]==0:
+                temp_list[color]=255
+            else:
+                temp_list[color]+=-1
+            im.values[i,j] = tuple(temp_list)
 
 
 """
@@ -110,10 +115,11 @@ def Decode(image_name):
 
     #appliquer les foncdtion de decodage
     functions =["test_func"] #ne pas oublieer de mettre a jour
-    
-    for i,func in enumerate(functions):
-        if code_encodage[i]==1:
-            eval(func+"_dec")
+    for color in range(3):
+        for i,func in enumerate(functions):
+            if code_encodage[i][color]==1:
+                
+                eval(func+"_dec({0})".format("im"+','+str(color)))
 
     #trouver la parite des couches encoder
     encode_layer = find_encoded_layer(im)

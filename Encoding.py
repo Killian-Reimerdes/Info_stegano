@@ -25,15 +25,18 @@ class Encoding:
         #liste de toute les cellules d'encodage possible
         self.functions =["test_func"]
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
-        #self.code_encodage = ([randint(0,2)] for i in range(len(self.functions)))
-        self.code_encodage = [1]
+        #self.code_encodage = ([[randint(0,2)] for j in range(3)] for i in range(len(self.functions)))
+        self.code_encodage = [[1,0,1]]
 
     def test_func_enc(self,color:int):
         
         for i in range(self.pixels.lenght):
             for j in range(self.pixels.height):
                 temp_list =list(self.pixels.values[i,j])
-                temp_list[color]+=1
+                if temp_list[color]==255:
+                    temp_list[color]=0
+                else:
+                    temp_list[color]+=1
                 self.pixels.values[i,j]=tuple(temp_list)
     
     def message_to_bin(self):
@@ -86,15 +89,17 @@ class Encoding:
 
     def encode(self):
         """
-        encode le message dans l'image 
+        ecrit et encode le message dans l'image 
         """
-        # for color in range(3):
-        #     for i,func in enumerate(self.functions):
-        #         if self.code_encodage[i]==1:
-        #             eval("self."+func+"_enc("+str(color)+")")
-        # #pas encore utile pour l'instant
         self.message_to_bin()
         self.write_message(0)
+        
+        for color in range(3):
+            for i,func in enumerate(self.functions):
+                if self.code_encodage[i][color]==1:
+                    eval("self."+func+"_enc("+str(color)+")")
+        
+        
 
 
 
@@ -103,12 +108,16 @@ if __name__ == '__main__':
     #unchanged = Encoding("blank.png","new_blank","no message")
     enc = Encoding("blank.png","new_blank.png","Test")
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
-    
+    print("message_to_bin marche")
     enc.write_message(0)
     encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0]
     for i in range(16):
         #print(enc.pixels.values[i,0][0])
         assert enc.pixels.values[i,0][0]==encoeded_message[i]
     enc.pixels.save_image("encoded_blank.png")
+    print("l'ecriture marche ")
     
+    enc2 = Encoding("blank.png","new_blank.png","Test")
+    enc2.encode()
+
     print("ca marche pour l'instant")
