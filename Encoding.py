@@ -13,7 +13,7 @@ class Encoding:
         self.pixels = Pixels(image_name)
         #decide si on encode sur une base pair ou impair (une valuer par couleur)
         #self.encode_layer = ([randint(0,2)]for i in range(3))
-        self.encode_layer = [0,0,0]
+        self.encode_layer = [1,0,0]
         #met tout nos pixel a la valuer pair ou impair voulu
         for i in range(3):
             if self.encode_layer[i]==1:
@@ -26,7 +26,7 @@ class Encoding:
         self.functions =["test_func"]
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
         #self.code_encodage = ([[randint(0,2)] for j in range(3)] for i in range(len(self.functions)))
-        self.code_encodage = [[1,0,1]]
+        self.code_encodage = [[1,0,0],[1,0,0]]
 
     def test_func_enc(self,color:int):
         
@@ -39,6 +39,21 @@ class Encoding:
                     temp_list[color]+=1
                 self.pixels.values[i,j]=tuple(temp_list)
     
+    def func_1_enc(self,color:int):
+        last_value=0
+        for i in range(self.pixels.lenght):
+            for j in range(self.pixels.height):
+                if last_value < 0.01:
+                    if self.pixels.values[i,j][color]%2 >0.1:
+                        last_value = 1
+                else:
+                    temp_list = list( self.pixels.values[i,j])
+                    temp_list[color]+=1
+                    self.pixels.values[i,j]=tuple(temp_list) 
+                    if self.pixels.values[i,j][color]%2 < 0.1 :
+                        last_value = 0
+                        
+
     def message_to_bin(self):
         mess_bin = []
         

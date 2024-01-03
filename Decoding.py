@@ -2,11 +2,11 @@ from Pixels import Pixels
 from Encoding import Encoding
 
 def find_code_encododage(im : Pixels):
-    code_encododage = [[1,0,1]]
+    code_encododage = [[1,0,0],[1,0,0]]
     return code_encododage
 
 def find_encoded_layer(im:Pixels):
-    encoded_layer = [0,0,0]
+    encoded_layer = [1,0,0]
     return encoded_layer
 
 """
@@ -27,6 +27,20 @@ def test_func_dec(im : Pixels ,color:int):
                 temp_list[color]+=-1
             im.values[i,j] = tuple(temp_list)
 
+def func_1_dec(im : Pixels,color:int):
+    for i in range(im.lenght-1,-1,-1):
+        for j in range(im.height-1,-1,-1):
+            if j == 0 :
+                if im.values[i-1,im.height-1][color]%2>0.5:
+                    temp_list = list(im.values[i,j])
+                    temp_list[color] += -1
+                    im.values = tuple(temp_list)
+            else:
+                if im.values[i,j-1][color]%2>0.5:
+                    temp_list = list(im.values[i,j])
+                    temp_list[color] += -1
+                    im.values = tuple(temp_list)
+
 
 """
 
@@ -38,7 +52,9 @@ def extract_message(im : Pixels,color,encode_layer):
     if encode_layer[color]==1:
         for x in range(im.lenght):
             for y in range(im.height):
-                im.values[x,y]+=-1
+                temp_list = list(im.values[x,y])
+                temp_list[color] += -1
+                im.values[x,y] = tuple(temp_list)
     
     message_in_binairy = ""
     zero_counter=0
