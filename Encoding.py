@@ -92,7 +92,7 @@ class Encoding:
         #     for i,func in enumerate(self.functions):
         #         if self.code_encodage[i]==1:
         #             eval("self."+func+"_enc("+str(color)+")")
-        # pas encore utile pour l'instant
+        # #pas encore utile pour l'instant
         self.message_to_bin()
         self.write_message(0)
 

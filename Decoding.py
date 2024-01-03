@@ -149,7 +149,7 @@ if __name__ == '__main__':
     im= Encoding("real_Red_square.png","real_newRed_square.png","Au commencement, Dieu créa le ciel et la terre. La terre était informe et vide, il y avait des ténèbres au-dessus de l'abîme, et l'esprit du Seigneur planait au-dessus des eaux.")# a changer
     im.encode()
     im.pixels.save_image(im.new_name)
-    print(im.pixels.lenght)
+    
 
     
     Decodede_message = Decode(im.new_name)
