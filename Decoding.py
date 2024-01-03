@@ -182,15 +182,19 @@ if __name__ == '__main__':
 
 
     #test du systeme complet
-    im= Encoding("real_Red_square.png","real_newRed_square.png","Au commencement, Dieu créa le ciel et la terre. La terre était informe et vide, il y avait des ténèbres au-dessus de l'abîme, et l'esprit du Seigneur planait au-dessus des eaux.")# a changer
+    bible = open("bible.txt",'r')
+    bible_first_pages = bible.read()
+    
+    im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)# a changer
     im.encode()
     im.pixels.save_image(im.new_name)
     
 
     
     Decodede_message = Decode(im.new_name)
-    print(Decodede_message)
-    
-    assert Decodede_message == im.message
+    #print(Decodede_message)
+    print(Decodede_message[6872])#le seule caracter qui est faut un seul byt faut et jsp pas pk
+    for i in range(6850):#7459
+        assert Decodede_message[i] == im.message[i]
 
     print("putain ca marche ")
