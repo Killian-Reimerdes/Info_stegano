@@ -48,7 +48,10 @@ class Encoding:
                         last_value = 1
                 else:
                     temp_list = list( self.pixels.values[i,j])
-                    temp_list[color]+=1
+                    if temp_list[color]!=255:
+                        temp_list[color]+=1
+                    else:
+                        temp_list[color]=0
                     self.pixels.values[i,j]=tuple(temp_list) 
                     if self.pixels.values[i,j][color]%2 < 0.1 :
                         last_value = 0
@@ -92,7 +95,7 @@ class Encoding:
                     if x == self.pixels.lenght-1:
                         x=0
                         y += 1
-                        if y >= self.pixels.height:
+                        if y >= self.pixels.height-1:
                             color +=1 
                             y = 0
                     else:
