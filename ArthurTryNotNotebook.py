@@ -1,26 +1,28 @@
-#print("this is a file.py without cells")
-#print("salut Killian")
-#from PIL import Image
+from PIL import Image
 
 #imart = Image.new("RGB", (100,100),(100, 200, 15)) #tout doit être des tuples
-#imart.show()
-
 #size = imart.size
 #color = imart.mode
-
 #print(imart.mode)
 #print(imart.format) ##format je devrais mettre png
-
 #imart.save("ImartYes.png")
-
 ##changement 
+
+
+
+
+
+
 
 def test_trans_msg_ascII_bin():
     assert trans_msg_ascII_bin("a") == "0b1100001"
     assert trans_msg_ascII_bin("R") == "0b1010010"
     print("Everything works!")
 
-def trans_msg_ascII_bin(Msg):
+
+
+
+def trans_msg_ascII_bin(Msg): #"hello"
     """
     Cette fonction prend comme argument une lettre et return son numéro acsII en binaire
     """
@@ -29,13 +31,17 @@ def trans_msg_ascII_bin(Msg):
     
     return bin_Msg
 
-#test_trans_msg_ascII_bin()
 
+
+#test_trans_msg_ascII_bin()
 ## je dois ajouter quelque part un if qui vérifie si le caractere appartient à ascii
+
 
 def test_trans_loop_str():
     assert trans_loop_str("aR") == ["0b1100001","0b1010010"]
     print("yeah!")
+
+
 
 def trans_loop_str(Msglong):
     """
@@ -49,15 +55,26 @@ def trans_loop_str(Msglong):
     print(list_long_bin)
     return list_long_bin
 
-#test_trans_loop_str()  ## ça fonctionne
+#test_trans_loop_str()  ## ça fonctionne 
 
 #trans_loop_str("Bonjour Killian")
 
 
 
-original_string = "Hello, World!"
-modified_string = original_string[0] + original_string[0 + 1:]
-#print(modified_string[0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -68,17 +85,17 @@ P2_amount_red = 130
 P2_amount_green = 40
 P2_amount_blue = 200
 P3_amount_red =180
-#P3_amount_green = on s'en fou, il n'y aura pas d'info codé dessus
-#P3_amount_blue = on s'en fou, il n'y aura pas d'info codé dessus
+P3_amount_green = 40 #on s'en fou, il n'y aura pas d'info codé dessus
+P3_amount_blue = 160  #on s'en fou, il n'y aura pas d'info codé dessus
 
 def test_change_pixel():
     #assert change_pixel("0b1001100") == "1001100"
     #assert change_pixel("0b1001100") == 7
     #assert change_pixel("0b1001100", P1_amount_red, P1_amount_green, P1_amount_blue) == (101, 50, 120) #ça marche
-    assert change_pixel("0b1001100",P1_amount_red, P1_amount_green, P1_amount_blue, P2_amount_red, P2_amount_green, P2_amount_blue, P3_amount_red) == (101, 50, 120, 131, 41, 200, 180)
+    assert change_pixel("0b1001100",P1_amount_red, P1_amount_green, P1_amount_blue, P2_amount_red, P2_amount_green, P2_amount_blue, P3_amount_red, P3_amount_green, P3_amount_blue) == ((101, 50, 120) , (131, 41, 200) , (180, P3_amount_green, P3_amount_blue))
     print("bababooy")
 
-def change_pixel(bin_Msg, Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2_amount_red, Pi2_amount_green, Pi2_amount_blue, Pi3_amount_red):
+def change_pixel(bin_Msg, Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2_amount_red, Pi2_amount_green, Pi2_amount_blue, Pi3_amount_red, Pi3_amount_green, Pi3_amount_blue):
     """
     Cette fonction prend comme argument bin_Msg. (la valeur d'un seul caracter en binaire) exemple ("0b1010011") (c'est un string)
     Elle commence par enlever le "0b" du début
@@ -87,33 +104,70 @@ def change_pixel(bin_Msg, Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2
     """
     bin_Msg_sans_0b = bin_Msg[2:]
 
-    x = 0 
-    while x < len(bin_Msg_sans_0b):
 
-        if x == 0:
-            Pi1_amount_red = Pi1_amount_red + int(bin_Msg_sans_0b[x], 2)
-        elif x == 1:
-            Pi1_amount_green = Pi1_amount_green + int(bin_Msg_sans_0b[x], 2)
-        elif x == 2:
-            Pi1_amount_blue = Pi1_amount_blue + int(bin_Msg_sans_0b[x], 2)
-        elif x == 3:
-            Pi2_amount_red = Pi2_amount_red + int(bin_Msg_sans_0b[x],2 ) 
-        elif x == 4:
-            Pi2_amount_green = Pi2_amount_green + int(bin_Msg_sans_0b[x],2 ) 
-        elif x == 5:
-            Pi2_amount_blue = Pi2_amount_blue + int(bin_Msg_sans_0b[x],2 ) 
-        elif x == 6: 
-            Pi3_amount_red = Pi3_amount_red + int(bin_Msg_sans_0b[x],2 )
-        
-        else:
-            print("il y a un problème quelque part")
-        x = x + 1
+    Pi1_amount_red_N = Pi1_amount_red + int(bin_Msg_sans_0b[0], 2)
+    Pi1_amount_green_N = Pi1_amount_green + int(bin_Msg_sans_0b[1], 2)
+    Pi1_amount_blue_N = Pi1_amount_blue + int(bin_Msg_sans_0b[2], 2)
+    Pi2_amount_red_N = Pi2_amount_red + int(bin_Msg_sans_0b[3],2 ) 
+    Pi2_amount_green_N = Pi2_amount_green + int(bin_Msg_sans_0b[4],2 ) 
+    Pi2_amount_blue_N = Pi2_amount_blue + int(bin_Msg_sans_0b[5],2 ) 
+    Pi3_amount_red_N = Pi3_amount_red + int(bin_Msg_sans_0b[6],2 )
+    
+    Pi3_amount_green_N = Pi3_amount_green
+    Pi3_amount_blue_N = Pi3_amount_blue
 
-    return Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2_amount_red, Pi2_amount_green, Pi2_amount_blue, Pi3_amount_red
+    New_color_Pi1 = (Pi1_amount_red_N, Pi1_amount_green_N, Pi1_amount_blue_N)
+    New_color_Pi2 = (Pi2_amount_red_N, Pi2_amount_green_N, Pi2_amount_blue_N)
+    New_color_Pi3 = (Pi3_amount_red_N, Pi3_amount_green_N, Pi3_amount_blue_N)
+
+    Tuple_results = (New_color_Pi1, New_color_Pi2, New_color_Pi3)
+    print(Tuple_results)
+    return Tuple_results
+
+#test_change_pixel()
+
+#change_pixel("0b1001100",P1_amount_red, P1_amount_green, P1_amount_blue, P2_amount_red, P2_amount_green, P2_amount_blue, P3_amount_red, P3_amount_green, P3_amount_blue)
+
+def test_fonction_J():
+    assert fonction_J("salut") == ['0b1110011', '0b1100001', '0b1101100', '0b1110101', '0b1110100']
+    print("la fonction_J fonction")         #Cettre fonction sert un peu à rien
+
+def fonction_J(Msg_entier):
+    code_binaire = trans_loop_str(Msg_entier)
+    return code_binaire                 #Cette fonction sert un peu à rien
+
+#fonction_J("salut")
+    #for i in range(len(Msg_entier))
+#test_fonction_J()
+
+
+def reset_Imart():
+    imart = Image.new("RGB", (100,100),(250, 250, 250))
+    imart.save("imart.png")
+    #imart.show()
+    imart.close()
+reset_Imart()
+
+def place_le_pixel(fichier_img, Tuple_results):
+    imart2 = Image.open(fichier_img)
+    imart2.putpixel((0, 0), Tuple_results[0])
+    imart2.putpixel((0, 1), Tuple_results[1])
+    imart2.putpixel((0, 2), Tuple_results[2])
+    #imart2.show()
+    #imart2.close()   
+    return imart2
+
+
+#nouvel_variable_img = place_le_pixel("imart.png", ((101, 50, 120) , (131, 41, 200) , (180, 40, 160)))
+#pixel_value = nouvel_variable_img.getpixel((0,0))
+#print(pixel_value)
+    
 
 
 
-test_change_pixel()
+
+
+
 
 
 

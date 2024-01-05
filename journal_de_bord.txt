@@ -27,3 +27,5 @@ Idee de cellule de cryptage:
 --> 26 Décembre, Arthur: 
 	- fonction qui prend comme argument une string et return pour chaque lettre, l'ascii (str) en binaire. Toutes ces valeurs ascii en binaire 
 	forment une liste qui se fait return à la fin de la fonction.
+--> 27-28 Décembre Arthur: 
+    - 
