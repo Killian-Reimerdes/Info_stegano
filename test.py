@@ -30,4 +30,6 @@ tst = "0200000000"
 tst = tst[:-8]
 print(tst)
 
+print(str(int(255%2)))
+
 
