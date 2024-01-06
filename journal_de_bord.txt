@@ -38,3 +38,7 @@ Idee de cellule de cryptage:
 
 --> 5 janvier, Killian:
     - correction dans le code au niveau de quelques cas limite
+
+--> 6 janvier, Killian:
+    -correction du bug avec les pixels de valeurs 0 
+    -correction au niveau des couches d'enodage (on peu mtn encoder sur des couches pair ou impair)
