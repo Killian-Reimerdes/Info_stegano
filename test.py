@@ -1,4 +1,5 @@
 from Pixels import Pixels
+from random import randint
 # class test:
 #     def __init__(self,number):
 #         self.number = number
@@ -31,5 +32,5 @@ tst = tst[:-8]
 print(tst)
 
 print(str(int(255%2)))
-
+print([randint(0,1)for i in range(3)])
 
