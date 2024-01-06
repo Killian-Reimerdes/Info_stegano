@@ -1,13 +1,19 @@
 from Pixels import Pixels
 from Encoding import Encoding
 
-def find_code_encododage(im : Pixels):
-    code_encododage = [[1,0,0],[1,0,0]]
-    return code_encododage
-
-def find_encoded_layer(im:Pixels):
-    encoded_layer = [1,0,0]
-    return encoded_layer
+def find_signature(im:Pixels):
+    byts = im.values[0,0]
+    siganture = []
+    for color in range(3):
+        str = bin(byts[color])
+        str= str[2:]
+        while len(str) <8:
+            str = "0"+str
+        for i in str:
+            siganture.append(i)
+    encode_layer = [int(siganture[i]) for i in range(3)]
+    code_encodage = [[int(siganture[3+i+(3*j)])for i in range(3)]for j in range(7)] 
+    return encode_layer,code_encodage
 
 """
 
@@ -71,7 +77,7 @@ def extract_message(im : Pixels,encode_layer):
     
     message_in_binairy = ""
     zero_counter=0
-    x,y = 0,0
+    x,y = 1,0
     while  zero_counter<24:  #arret la lecture apres 24 zero d'affile
             
         message_in_binairy += str(int(im.values[x,y][color]%2))
@@ -151,9 +157,9 @@ def Decode(image_name):
     #ouvrir l'image
     im = Pixels(image_name)
 
-    #trouver le code d'encodage
+    #trouver le code d'encodage et la parite des couches encoder
 
-    code_encodage = find_code_encododage(im)
+    encode_layer, code_encodage = find_signature(im)
 
     
 
@@ -165,8 +171,8 @@ def Decode(image_name):
             if code_encodage[i][color]==1:
                    eval(func+"_dec({0})".format("im,"+str(color)))
 
-    #trouver la parite des couches encoder
-    encode_layer = find_encoded_layer(im)
+    
+    
     
     #sortir le message en binaire
     message_in_binairy = extract_message(im,encode_layer)

@@ -23,11 +23,39 @@ class Encoding:
 
 
         #liste de toute les cellules d'encodage possible
-        self.functions =["test_func","func_1"]
+        self.functions =["test_func","func_1"]  
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
         #self.code_encodage = ([[randint(0,2)] for j in range(3)] for i in range(len(self.functions)))
-        self.code_encodage = [[1,0,0],[1,0,0]]
+        #self.code_encodage = [[1,0,0],[1,0,0]]
+        
 
+         #ecrit les parametere d'enodage
+        signature = []
+        for i in range(3):
+            signature.append(str(self.encode_layer[i]))
+        for i in range(len(self.functions)):
+            for j in range(3):
+                signature.append(str(self.code_encodage[i][j]))
+        if len(signature)>24:
+            return SystemError #attention si on depasse 7 fonction on doit agrandir la signature
+        while len(signature)<24:
+            signature.append("0")
+        
+        x = 0
+        self.signature=[]
+        for i in range(3):
+            byt = ''
+            for i in range(8):
+            
+                byt += signature[x]
+                x += 1
+            byt = int(byt,2)
+            self.signature.append(byt)
+        print(self.signature)
+        
+        
+
+        
     def test_func_enc(self,color:int):
         
         for i in range(self.pixels.lenght):
@@ -66,19 +94,22 @@ class Encoding:
         return mess_bin
     
     def write_message(self):
+       
+
+        #ecrit le message
         if self.message_bin != []:
             if len(self.message)>(self.pixels.height * self.pixels.lenght * 3):
                 print("message too long")
             else:
                 color = 0
-                code = []
+                code= []
                 for byt in self.message_bin:
                     bits = byt[2:]
                     while len(bits)<8:
                         bits = "0"+ bits
                     for bit in bits:
                         code.append(bit)
-                x,y = 0,0    
+                x,y = 1,0    
                 for i in code:
                     
                     if i == "1":
@@ -121,6 +152,8 @@ class Encoding:
                 if self.code_encodage[i][color]==1:
                     eval("self."+func+"_enc("+str(color)+")")
         
+        self.pixels.values[0,0] = tuple(self.signature)
+        
         
 
 
@@ -134,7 +167,7 @@ if __name__ == '__main__':
     enc.write_message()
     encoeded_message = [255,0,255,0,255,0,255,255,255,0,0,255,255,0,255,0,255,0,0,0,255,255,0,0,255,0,0,0,255,0,255,255]
     for i in range(32):
-        assert enc.pixels.values[i,0][0]==encoeded_message[i]
+        assert enc.pixels.values[i+1,0][0]==encoeded_message[i]
     enc.pixels.save_image("encoded_blank.png")
     print("l'ecriture marche ")
     
@@ -142,8 +175,8 @@ if __name__ == '__main__':
 
     enc.func_1_enc(0)
     for i in range(32):
-        print(enc.pixels.values[i,0])
-        assert enc.pixels.values[i,0][0]== [255,0,0,1,255,0,0,0,0,1,0,0,0,1,255,0,0,1,0,1,255,255,0,1,255,0,1,0,0,1,255,255][i]
+        #print(enc.pixels.values[i,0])
+        assert enc.pixels.values[i+1,0][0]== [255,0,0,1,255,0,0,0,0,1,0,0,0,1,255,0,0,1,0,1,255,255,0,1,255,0,1,0,0,1,255,255][i]
                                            
        
     print("func 1 fonctionne")
