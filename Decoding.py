@@ -21,23 +21,25 @@ def test_func_dec(im : Pixels ,color:int):
     for i in range(im.lenght):
         for j in range(im.height):
             temp_list=list(im.values[i,j])
-            if temp_list[color]==0:
-                temp_list[color]=255
+            if temp_list[color] == 0:
+                temp_list[color] = 255
             else:
-                temp_list[color]+=-1
+                temp_list[color] += -1
             im.values[i,j] = tuple(temp_list)
 
 def func_1_dec(im : Pixels,color:int):
     for i in range(im.lenght-1,-1,-1):
         for j in range(im.height-1,-1,-1):
             if j == 0 :
+                if i == 0 :
+                    return
                 if im.values[i-1,im.height-1][color]%2>0.5:
                     temp_list = list(im.values[i,j])
                     if temp_list[color] != 0:
                         temp_list[color] += -1
                     else:
                         temp_list[color] = 255
-                    im.values = tuple(temp_list)
+                    im.values[i,j] = tuple(temp_list)
             else:
                 if im.values[i,j-1][color]%2>0.5:
                     temp_list = list(im.values[i,j])
@@ -45,7 +47,7 @@ def func_1_dec(im : Pixels,color:int):
                         temp_list[color] += -1
                     else:
                         temp_list[color]=255
-                    im.values = tuple(temp_list)
+                    im.values[i,j] = tuple(temp_list)
 
 
 """
@@ -83,7 +85,7 @@ def extract_message(im : Pixels,encode_layer):
         if x >= im.lenght-1:
             x = 0
             y += 1
-            if y >= im.height:
+            if y >= im.height-1:
                 color += 1
                 if color >= 3 :
                     return message_in_binairy
@@ -156,12 +158,12 @@ def Decode(image_name):
     
 
     #appliquer les foncdtion de decodage
-    functions =["test_func"] #ne pas oublieer de mettre a jour
+    functions =  ["test_func","func_1"] #ne pas oublieer de mettre a jour
+    functions.reverse()
     for color in range(3):
         for i,func in enumerate(functions):
             if code_encodage[i][color]==1:
-                
-                eval(func+"_dec({0})".format("im,"+str(color)))
+                   eval(func+"_dec({0})".format("im,"+str(color)))
 
     #trouver la parite des couches encoder
     encode_layer = find_encoded_layer(im)
@@ -186,10 +188,16 @@ if __name__ == '__main__':
 
 
     pix = Pixels("encoded_blank.png")
-    message = extract_message(pix,[0,0,0])
+    message = extract_message(pix,[1,0,0])
     encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0]
     assert message == "01010100011001010111001101110100"
     print('extract message works')
+
+    pix2 = Pixels("new_blank.png")
+    func_1_dec(pix2,0)
+    message2 = extract_message(pix2,[1,0,0])
+    assert message == message2
+    print("func_1_dec works")
 
 
 
@@ -198,22 +206,19 @@ if __name__ == '__main__':
     bible_first_pages = bible.read()
     
     im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
-    #im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas non plus
-    print(im.pixels.values[978,45])
+    #im= Encoding("blank.png","newblank.png"," ") # fonction pas non plus
+    
     im.encode()
     im.pixels.save_image(im.new_name)
+    
     
 
     
     Decodede_message = Decode(im.new_name)
     
-    #y avait un bit qui etait faut a un moment pas reussi a resoudre pk 
-    #(ducoup la 6873 eme lettre doit etre une majuscule et jai aucone idee pk avec real_Red_square.png) 
-    # mais ca marche si on met une majuscule en cete position
-    # je crois le code narrive pa a lire les 0 comme des nombres pairs
-    print(im.pixels.values[978,45])
-    print(Decodede_message[6870:6880])
-    for i in range(6874):#7459    
+    
+    
+    for i in range(len(Decodede_message)):#7459 pour bible 
        assert Decodede_message[i] == im.message[i]
 
     print("putain ca marche ")

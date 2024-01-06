@@ -23,7 +23,7 @@ class Encoding:
 
 
         #liste de toute les cellules d'encodage possible
-        self.functions =["test_func"]
+        self.functions =["test_func","func_1"]
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
         #self.code_encodage = ([[randint(0,2)] for j in range(3)] for i in range(len(self.functions)))
         self.code_encodage = [[1,0,0],[1,0,0]]
@@ -132,9 +132,8 @@ if __name__ == '__main__':
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
     print("message_to_bin marche")
     enc.write_message()
-    encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,0,1,1,0,1,1,1,0,1,0,0]
+    encoeded_message = [255,0,255,0,255,0,255,255,255,0,0,255,255,0,255,0,255,0,0,0,255,255,0,0,255,0,0,0,255,0,255,255]
     for i in range(32):
-        #print(enc.pixels.values[i,0][0])
         assert enc.pixels.values[i,0][0]==encoeded_message[i]
     enc.pixels.save_image("encoded_blank.png")
     print("l'ecriture marche ")
@@ -143,12 +142,13 @@ if __name__ == '__main__':
 
     enc.func_1_enc(0)
     for i in range(32):
-        assert enc.pixels.values[i,0][0]==[0,1,1,2,0,1,1,1,1,2,1,1,1,2,0,1,1,2,1,2,0,0,1,2,0,1,2,1,1,2,0,0][i]
+        print(enc.pixels.values[i,0])
+        assert enc.pixels.values[i,0][0]== [255,0,0,1,255,0,0,0,0,1,0,0,0,1,255,0,0,1,0,1,255,255,0,1,255,0,1,0,0,1,255,255][i]
+                                           
        
     print("func 1 fonctionne")
 
     #pour test decoding
-    enc2 = Encoding("blank.png","new_blank.png","Test")
-    enc2.encode()
+    enc.pixels.save_image(enc.new_name)
     
     print("ca marche pour l'instant")

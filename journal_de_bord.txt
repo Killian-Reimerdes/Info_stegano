@@ -29,3 +29,12 @@ Idee de cellule de cryptage:
 	forment une liste qui se fait return à la fin de la fonction.
 --> 27-28 Décembre Arthur: 
     - 
+
+--> 3 janvier , Killian:
+    - finit les fonction d'écriture et de lecture
+    - premiere fonction d'encodage et de decodage
+    - écriture et lecture sur toute les couleurs
+    - test sur plus grand echantillons et decouverte d'unn porbleme concernant les pixels de valeur 0 
+
+--> 5 janvier, Killian:
+    - correction dans le code au niveau de quelques cas limite

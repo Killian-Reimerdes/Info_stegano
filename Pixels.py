@@ -53,7 +53,10 @@ class Pixels:
             for j in range(self.height):
                 if self.values[i,j][color]%2 != 1:
                     list_temp = list(self.values[i,j])
-                    list_temp[color] += -1
+                    if list_temp[color]!=0:
+                        list_temp[color] += -1
+                    else:
+                        list_temp[color]=255
                     self.values[i,j] = tuple(list_temp)
 
 
