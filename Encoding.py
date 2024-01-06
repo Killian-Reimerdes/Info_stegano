@@ -52,12 +52,18 @@ class Encoding:
                 x += 1
             byt = int(byt,2)
             self.signature.append(byt)
-        print(self.signature)
         
         
 
         
     def test_func_enc(self,color:int):
+        """
+        FOnction d'encodage qui consiste a additione 1 a la valeur de chaque pixel sur une couleur
+
+        Args : l'image (self) et la couleur (int entre 0 et 2)
+
+        Returns : None 
+        """
         
         for i in range(self.pixels.lenght):
             for j in range(self.pixels.height):
@@ -69,6 +75,15 @@ class Encoding:
                 self.pixels.values[i,j]=tuple(temp_list)
     
     def func_1_enc(self,color:int):
+        """
+        Fonction d'encodage qui consiste a additioner un a la valeur d'uen couleur de chauqe pixel 
+        qui est preceder d'un pixel ayant une valeur impaire pour cette couleur
+
+        Args : l'image (self) et la couleur (int entre 0 et 2)
+
+        returns : None
+
+        """
         last_value=0
         for i in range(self.pixels.lenght):
             for j in range(self.pixels.height):
@@ -87,6 +102,13 @@ class Encoding:
                         
 
     def message_to_bin(self):
+        """
+        Converti le message du text a un string binaire
+
+        Args : le message (self)
+
+        returns : le message en binaire
+        """
         mess_bin = []
         
         for letter in self.message:
@@ -95,6 +117,13 @@ class Encoding:
         return mess_bin
     
     def write_message(self):
+        """
+        Ecerit le message dans l'image
+
+        Args : l'image (self) et le message en binaire (self)
+
+        Returns : None
+        """
        
 
         #ecrit le message
@@ -143,7 +172,12 @@ class Encoding:
 
     def encode(self):
         """
-        ecrit et encode le message dans l'image 
+        converti en binaire, ecrit, encode le message dans l'image  et sauvegarde
+
+        Args : l'image, le message, les parametre d'encodage (cles)
+
+        Return : None
+
         """
         self.message_to_bin()
         self.write_message()
@@ -154,6 +188,8 @@ class Encoding:
                     eval("self."+func+"_enc("+str(color)+")")
         
         self.pixels.values[0,0] = tuple(self.signature)
+
+        self.pixels.save_image(self.new_name)
         
         
 
@@ -161,7 +197,9 @@ class Encoding:
 
 
 if __name__ == '__main__':
-    #unchanged = Encoding("blank.png","new_blank","no message")
+    #test ne fonctionne plus a cause des fonctionalite ajouter apres coup
+    
+    #test ecriture
     enc = Encoding("blank.png","new_blank.png","Test")
     assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
     print("message_to_bin marche")
@@ -169,7 +207,7 @@ if __name__ == '__main__':
     encoeded_message = [255,0,255,0,255,0,255,255,255,0,0,255,255,0,255,0,255,0,0,0,255,255,0,0,255,0,0,0,255,0,255,255]
     for i in range(32):
         assert enc.pixels.values[i+1,0][0]==encoeded_message[i]
-    enc.pixels.save_image("encoded_blank.png")
+    
     print("l'ecriture marche ")
     
     
@@ -182,7 +220,6 @@ if __name__ == '__main__':
        
     print("func 1 fonctionne")
 
-    #pour test decoding
-    enc.pixels.save_image(enc.new_name)
+   
     
     print("ca marche pour l'instant")

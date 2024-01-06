@@ -2,6 +2,16 @@ from Pixels import Pixels
 from Encoding import Encoding
 
 def find_signature(im:Pixels):
+    """
+    Trouve la signature d'une image donc les paramtere selon lesquels le message a ete encoder
+
+    Args : l'image (Classe Pixels)
+
+    Returns : encode_layer ([0,1,1] qui indique si le message a ete enceoder sur des couches
+      paires ou impaires) et code_encodage ([[1,0,1],[0,1,1]...] qui indique quel fonction a ete
+      applique sur chaque couche)
+    """
+
     byts = im.values[0,0]
     siganture = []
     for color in range(3):
@@ -24,6 +34,14 @@ Fonctions de décodage
 
 
 def test_func_dec(im : Pixels ,color:int):
+    """
+    Inverse de la fonction test_func_enc de la class Encoding 
+    consiste a soustraire 1 a la valeur d'une certaines couleur pour chaque pixel
+
+    Args: l'image (class Pixels) et la couleur (int entre 0 et 2)
+
+    Return : None
+    """
     for i in range(im.lenght):
         for j in range(im.height):
             temp_list=list(im.values[i,j])
@@ -34,6 +52,15 @@ def test_func_dec(im : Pixels ,color:int):
             im.values[i,j] = tuple(temp_list)
 
 def func_1_dec(im : Pixels,color:int):
+    """
+    Inverse de la fonction func_1_enc de la class Encoding
+    consiste a soustraire 1 a la valeur d'une couleur pour
+    chaque pixel qui suit un pixel dont la valeur de la couleur est impaire
+
+    Args: limage (class Pixels) et la couleur (int entre 0 et 2)
+
+    Returns : None
+    """
     for i in range(im.lenght-1,-1,-1):
         for j in range(im.height-1,-1,-1):
             if j == 0 :
@@ -62,6 +89,14 @@ Sortir le message en binaire et le passer en string
 
 """
 def extract_message(im : Pixels,encode_layer):
+    """
+    sort le message en binaire de l'image
+
+    Args: l'image (class Pixels) et la cle pour les couches d'encodage ([0,1,0])
+
+    Return : le message en str binaire
+    """
+
     #corrige si on encode sur une couche impaire
     color = 0
     
@@ -93,6 +128,7 @@ def extract_message(im : Pixels,encode_layer):
             y += 1
             if y >= im.height-1:
                 color += 1
+                x,y = 1,0
                 if color >= 3 :
                     return message_in_binairy
                 if encode_layer[color]==1:
@@ -119,6 +155,13 @@ def extract_message(im : Pixels,encode_layer):
     return message_in_binairy
 
 def translate_to_text(message_in_binairy:str):
+    """
+    prend un message ecrit en binaire(str de 0 et de 1) et rend le text traduit
+
+    Args: str (binaire)
+
+    Return : message decode (str)
+    """
     message_in_real_binairy = []
     while message_in_binairy!="":
         byt = ""
@@ -211,18 +254,20 @@ if __name__ == '__main__':
     bible = open("bible.txt",'r')
     bible_first_pages = bible.read()
     
-    im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
-    #im= Encoding("blank.png","newblank.png"," ") # fonction pas non plus
+    #im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
+    im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas tjrs avec la bible
     
     im.encode()
     im.pixels.save_image(im.new_name)
     
-    
+    assert find_signature(Pixels(im.new_name))[0]==im.encode_layer
+    assert find_signature(Pixels(im.new_name))[1][:2]==im.code_encodage
+    print("signature found")
 
     
     Decodede_message = Decode(im.new_name)
     
-    
+    print(Decodede_message)
     
     for i in range(len(Decodede_message)):#7459 pour bible 
        assert Decodede_message[i] == im.message[i]
