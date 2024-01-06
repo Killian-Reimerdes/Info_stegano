@@ -57,7 +57,7 @@ def trans_loop_str(Msglong):
 
 #test_trans_loop_str()  ## ça fonctionne 
 
-#trans_loop_str("Bonjour Killian")
+trans_loop_str("Bonjour Killian")
 
 
 
@@ -148,17 +148,18 @@ def reset_Imart():
     imart.close()
 reset_Imart()
 
-def place_le_pixel(fichier_img, Tuple_results):
+def place_le_pixel(fichier_img, Tuple_results, nieme_pix):
     imart2 = Image.open(fichier_img)
-    imart2.putpixel((0, 0), Tuple_results[0])
-    imart2.putpixel((0, 1), Tuple_results[1])
-    imart2.putpixel((0, 2), Tuple_results[2])
+    imart2.putpixel((nieme_pix, 0), Tuple_results[0])
+    imart2.putpixel((nieme_pix, 1), Tuple_results[1])
+    imart2.putpixel((nieme_pix, 2), Tuple_results[2])
     #imart2.show()
     #imart2.close()   
     return imart2
 
 
-#nouvel_variable_img = place_le_pixel("imart.png", ((101, 50, 120) , (131, 41, 200) , (180, 40, 160)))
+nouvel_variable_img = place_le_pixel("imart.png", ((101, 50, 120) , (131, 41, 200) , (180, 40, 160)), 0)
+nouvel_variable_img.show()
 #pixel_value = nouvel_variable_img.getpixel((0,0))
 #print(pixel_value)
     
