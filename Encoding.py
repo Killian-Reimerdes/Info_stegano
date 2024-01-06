@@ -67,6 +67,7 @@ class Encoding:
         
         for i in range(self.pixels.lenght):
             for j in range(self.pixels.height):
+                
                 temp_list =list(self.pixels.values[i,j])
                 if temp_list[color]==255:
                     temp_list[color]=0
@@ -87,18 +88,19 @@ class Encoding:
         last_value=0
         for i in range(self.pixels.lenght):
             for j in range(self.pixels.height):
-                if last_value < 0.01:
-                    if self.pixels.values[i,j][color]%2 >0.1:
-                        last_value = 1
-                else:
-                    temp_list = list( self.pixels.values[i,j])
-                    if temp_list[color]!=255:
-                        temp_list[color]+=1
+                if (i,j)!=(0,0):
+                    if last_value < 0.01:
+                        if self.pixels.values[i,j][color]%2 >0.1:
+                            last_value = 1
                     else:
-                        temp_list[color]=0
-                    self.pixels.values[i,j]=tuple(temp_list) 
-                    if self.pixels.values[i,j][color]%2 < 0.1 :
-                        last_value = 0
+                        temp_list = list( self.pixels.values[i,j])
+                        if temp_list[color]!=255:
+                            temp_list[color]+=1
+                        else:
+                            temp_list[color]=0
+                        self.pixels.values[i,j]=tuple(temp_list) 
+                        if self.pixels.values[i,j][color]%2 < 0.1 :
+                            last_value = 0
                         
 
     def message_to_bin(self):

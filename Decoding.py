@@ -64,7 +64,7 @@ def func_1_dec(im : Pixels,color:int):
     for i in range(im.lenght-1,-1,-1):
         for j in range(im.height-1,-1,-1):
             if j == 0 :
-                if i == 0 :
+                if i == 1 :
                     return
                 if im.values[i-1,im.height-1][color]%2>0.5:
                     temp_list = list(im.values[i,j])
@@ -254,8 +254,8 @@ if __name__ == '__main__':
     bible = open("bible.txt",'r')
     bible_first_pages = bible.read()
     
-    #im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
-    im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas tjrs avec la bible
+    im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
+    #im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas tjrs avec la bible
     
     im.encode()
     im.pixels.save_image(im.new_name)
@@ -265,11 +265,15 @@ if __name__ == '__main__':
     print("signature found")
 
     
+    
+    
+
+
     Decodede_message = Decode(im.new_name)
-    
-    print(Decodede_message)
-    
+    print(im.encode_layer)
+    print(im.code_encodage)
     for i in range(len(Decodede_message)):#7459 pour bible 
        assert Decodede_message[i] == im.message[i]
 
     print("putain ca marche ")
+ 
