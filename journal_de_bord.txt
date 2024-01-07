@@ -49,3 +49,5 @@ Idee de cellule de cryptage:
     -code fonctionel sans bug observé
     -ajout func_2 encodage et decodage
     -ajout d'un seuil minimum de fonction d'encodage
+    -ajout des scripts
+    -cas ou aucun nom de nouvelle image est donée
