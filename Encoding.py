@@ -4,7 +4,7 @@ import copy
 
 
 class Encoding:
-    def __init__(self,image_name,new_image_name,message):
+    def __init__(self,image_name,new_image_name="Ton_Image_avec1_Message.png", message="Ton pote il a oublié de mettre un message"):
         
         #message à cacher dans l'image
         self.message = message

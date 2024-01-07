@@ -332,7 +332,7 @@ if __name__ == '__main__':
     random = ''.join(random.choices(string.ascii_letters + string.digits, k=100000))
     #https://www.javatpoint.com/python-program-to-generate-a-random-string
 
-    im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
+    im= Encoding("real_Red_square.png","real_newRed_square.png",message=bible_first_pages)
     #im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas tjrs avec la bible
 
     im.encode()
