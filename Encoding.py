@@ -130,7 +130,7 @@ class Encoding:
 
         #ecrit le message
         if self.message_bin != []:
-            if len(self.message)>(self.pixels.height * self.pixels.lenght * 3):
+            if len(self.message)>=(self.pixels.height * self.pixels.lenght * 3):
                 print("message too long")
             else:
                 color = 0
