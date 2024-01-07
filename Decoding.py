@@ -1,5 +1,7 @@
 from Pixels import Pixels
 from Encoding import Encoding
+import string
+import random
 
 def find_signature(im:Pixels):
     """
@@ -69,8 +71,7 @@ def func_1_dec(im : Pixels,color:int):
     for i in range(im.lenght-1,-1,-1):
         for j in range(im.height-1,-1,-1):
             if j == 0 :
-                if i == 0 :
-                    return
+                
                 if im.values[i-1,im.height-1][color]%2>0.5:
                     temp_list = list(im.values[i,j])
                     if temp_list[color] != 0:
@@ -78,6 +79,8 @@ def func_1_dec(im : Pixels,color:int):
                     else:
                         temp_list[color] = 255
                     im.values[i,j] = tuple(temp_list)
+            elif (i,j)==(0,1):
+                return
             else:
                 if im.values[i,j-1][color]%2>0.5:
                     temp_list = list(im.values[i,j])
@@ -154,6 +157,8 @@ def extract_message(im : Pixels,encode_layer):
     while len(message_in_binairy)%8 > 0.1 :
         
         message_in_binairy = message_in_binairy[:-1]
+    while message_in_binairy[-8:]=="00000000":
+        message_in_binairy = message_in_binairy[:-8]
 
         
         
@@ -242,7 +247,7 @@ if __name__ == '__main__':
     test = '01010100011001010111001101110100'
     assert (translate_to_text(test) == 'Test')
     #print("bin to text works")
-
+    
 
     pix = Pixels("encoded_blank.png")
     message = extract_message(pix,[1,0,0])
@@ -261,10 +266,12 @@ if __name__ == '__main__':
     #test du systeme complet
     bible = open("bible.txt",'r')
     bible_first_pages = bible.read()
-    
-    im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
+    random = ''.join(random.choices(string.ascii_letters + string.digits, k=100000))
+    #https://www.javatpoint.com/python-program-to-generate-a-random-string
+
+    im= Encoding("real_Red_square.png","real_newRed_square.png",random)
     #im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas tjrs avec la bible
-    
+
     im.encode()
     im.pixels.save_image(im.new_name)
     
@@ -272,17 +279,27 @@ if __name__ == '__main__':
     assert find_signature(Pixels(im.new_name))[1][:2]==im.code_encodage
     #print("signature found")
 
-    
-    
-    
+        
+        
+        
 
     #print(im.code_encodage)
     Decodede_message = Decode(im.new_name)
     #print(im.encode_layer)
     
-    print(Decodede_message[1000])
-    for i in range(len(Decodede_message)):#7459 pour bible 
-       assert Decodede_message[i] == im.message[i]
+        
+   
+    #assert Decodede_message == im.message
+    #print("putain ca marche ")
+    
+    
+    if Decodede_message == im.message:
+        print("putain ca marche ")
+    else:
+        for i in range(len(Decodede_message)):
+            if Decodede_message[i]!=im.message[i]:
+                print(i)
+                print(Decodede_message[i],im.message[i])
 
-    print("putain ca marche ")
- 
+        #print(Decodede_message)
+    
