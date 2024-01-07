@@ -14,7 +14,7 @@ class Encoding:
         self.pixels = Pixels(image_name)
         #decide si on encode sur une base pair ou impair (une valuer par couleur)
         self.encode_layer = [randint(0,1)for i in range(3)]
-        #self.encode_layer = [1,0,0]
+        #self.encode_layer = [0,0,0]
         #met tout nos pixel a la valuer pair ou impair voulu
         for i in range(3):
             if self.encode_layer[i]==1:
@@ -27,7 +27,7 @@ class Encoding:
         self.functions =["test_func","func_1"]  
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
         self.code_encodage = [[randint(0,1) for j in range(3)] for i in range(len(self.functions))]
-        #self.code_encodage = [[1,0,0],[1,0,0]]
+        #self.code_encodage = [[0,0,0],[1,0,0]]
         
         
          #ecrit les parametere d'enodage

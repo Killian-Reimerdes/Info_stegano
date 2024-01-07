@@ -42,6 +42,8 @@ def test_func_dec(im : Pixels ,color:int):
 
     Return : None
     """
+    #print("test_func_dec sur",color)
+   
     for i in range(im.lenght):
         for j in range(im.height):
             temp_list=list(im.values[i,j])
@@ -61,10 +63,13 @@ def func_1_dec(im : Pixels,color:int):
 
     Returns : None
     """
+
+    #print("func_1_dec sur ",color)
+
     for i in range(im.lenght-1,-1,-1):
         for j in range(im.height-1,-1,-1):
             if j == 0 :
-                if i == 1 :
+                if i == 0 :
                     return
                 if im.values[i-1,im.height-1][color]%2>0.5:
                     temp_list = list(im.values[i,j])
@@ -209,9 +214,12 @@ def Decode(image_name):
     #appliquer les foncdtion de decodage
     functions =  ["test_func","func_1"] #ne pas oublieer de mettre a jour
     functions.reverse()
+    #print(code_encodage)
     for color in range(3):
         for i,func in enumerate(functions):
-            if code_encodage[i][color]==1:
+            
+            if code_encodage[len(functions)-i-1][color]==1:
+                   
                    eval(func+"_dec({0})".format("im,"+str(color)))
 
     
@@ -233,20 +241,20 @@ def Decode(image_name):
 if __name__ == '__main__':
     test = '01010100011001010111001101110100'
     assert (translate_to_text(test) == 'Test')
-    print("bin to text works")
+    #print("bin to text works")
 
 
     pix = Pixels("encoded_blank.png")
     message = extract_message(pix,[1,0,0])
     encoeded_message = [0,1,0,1,0,1,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,0]
     assert message == "01010100011001010111001101110100"
-    print('extract message works')
+    #print('extract message works')
 
     pix2 = Pixels("new_blank.png")
     func_1_dec(pix2,0)
     message2 = extract_message(pix2,[1,0,0])
     assert message == message2
-    print("func_1_dec works")
+    #print("func_1_dec works")
 
 
 
@@ -262,16 +270,17 @@ if __name__ == '__main__':
     
     assert find_signature(Pixels(im.new_name))[0]==im.encode_layer
     assert find_signature(Pixels(im.new_name))[1][:2]==im.code_encodage
-    print("signature found")
+    #print("signature found")
 
     
     
     
 
-
+    #print(im.code_encodage)
     Decodede_message = Decode(im.new_name)
-    print(im.encode_layer)
-    print(im.code_encodage)
+    #print(im.encode_layer)
+    
+    print(Decodede_message[1000])
     for i in range(len(Decodede_message)):#7459 pour bible 
        assert Decodede_message[i] == im.message[i]
 
