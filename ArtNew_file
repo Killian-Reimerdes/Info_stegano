@@ -33,12 +33,12 @@ def Main_fonc(Message_a_cacher):
         Tuple_results = change_pixel(bin_Msg, Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2_amount_red, Pi2_amount_green, Pi2_amount_blue, Pi3_amount_red, Pi3_amount_green, Pi3_amount_blue)   #returns Tuple_results = (New_color_Pi1, New_color_Pi2, New_color_Pi3)
         place_le_pixel("imart.png",Tuple_results,i)
 
-Main_fonc("Bonjour Killian")
+#Main_fonc("Bonjour Killian")
 
 image = Image.open("imart.png")
 image.show()
 
 
-
+reset_Imart()
 
 
