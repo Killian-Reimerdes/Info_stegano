@@ -28,6 +28,13 @@ class Encoding:
         self.functions =["test_func","func_1","func_2"]  
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
         self.code_encodage = [[randint(0,1) for j in range(3)] for i in range(len(self.functions))]
+        z=0
+        while z<4:
+            z = 4
+            for i in range(len(self.functions)):
+                for j in range(3):
+                    if self.code_encodage[i][j]==1:
+                        z += 1
         
         
         
