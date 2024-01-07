@@ -90,6 +90,35 @@ def func_1_dec(im : Pixels,color:int):
                         temp_list[color]=255
                     im.values[i,j] = tuple(temp_list)
 
+def func_2_dec(im:Pixels,x:int):
+    if x == 0:
+            for i in range(im.lenght):
+                for j in range(im.height):
+                    if (i,j)!=(0,0):
+                        temp_list= list(im.values[i,j])
+                        parity = []
+                        for color in range(3):
+                            if temp_list[color]%2 == 0:
+                                parity.append(0)
+                            else:
+                                parity.append(1)
+                        for color in range(3):
+                            if parity[color]==1:
+                                if temp_list[color]!=255:
+                                    temp_list[color]+=1
+                                else :
+                                    temp_list[color]=0
+                        for color in range(3):
+                            if parity[color-2]==1:
+                                if temp_list[color]!=0:
+                                    temp_list[color]+=-1
+                                else:
+                                    temp_list[color]=255
+                        im.values[i,j] = tuple(temp_list)
+
+
+
+
 
 """
 
@@ -217,7 +246,7 @@ def Decode(image_name):
     
 
     #appliquer les foncdtion de decodage
-    functions =  ["test_func","func_1"] #ne pas oublieer de mettre a jour
+    functions =  ["test_func","func_1","func_2"] #ne pas oublieer de mettre a jour
     functions.reverse()
     #print(code_encodage)
     for color in range(3):
@@ -261,6 +290,22 @@ if __name__ == '__main__':
     assert message == message2
     #print("func_1_dec works")
 
+    test_1 = Encoding("blank.png","new_blank.png","Test")
+    vvalues = []
+    for i in range(test_1.pixels.lenght):
+        line = []
+        for j in range(test_1.pixels.height):
+            line.append(test_1.pixels.values[i,j])
+        vvalues.append(line)
+    func_2_dec(test_1.pixels,0)
+    for i in range(test_1.pixels.lenght):
+        for j in range(test_1.pixels.height):
+            if (i,j)!=(0,0):
+                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][1]%2
+                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][2]%2
+                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][0]%2
+    print("func_2_dec marche")
+
 
 
     #test du systeme complet
@@ -276,7 +321,7 @@ if __name__ == '__main__':
     im.pixels.save_image(im.new_name)
     
     assert find_signature(Pixels(im.new_name))[0]==im.encode_layer
-    assert find_signature(Pixels(im.new_name))[1][:2]==im.code_encodage
+    assert find_signature(Pixels(im.new_name))[1][:len(im.functions)]==im.code_encodage
     #print("signature found")
 
         

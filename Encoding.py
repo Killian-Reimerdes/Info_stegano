@@ -1,5 +1,6 @@
 from Pixels import Pixels
 from random import randint
+import copy
 
 
 class Encoding:
@@ -24,7 +25,7 @@ class Encoding:
 
 
         #liste de toute les cellules d'encodage possible
-        self.functions =["test_func","func_1"]  
+        self.functions =["test_func","func_1","func_2"]  
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
         self.code_encodage = [[randint(0,1) for j in range(3)] for i in range(len(self.functions))]
         
@@ -104,10 +105,10 @@ class Encoding:
                         
 
     def func_2_enc(self,color:int):
-        if color != 0:
-            for i in range(1):
-                for j in range(1):
-                    print(self.pixels.values[i,j])
+        if color == 0:
+            for i in range(self.pixels.lenght):
+                for j in range(self.pixels.height):
+                    
                     temp_list= list(self.pixels.values[i,j])
                     parity = []
                     for color in range(3):
@@ -115,20 +116,20 @@ class Encoding:
                             parity.append(0)
                         else:
                             parity.append(1)
-                    for color in range(3):
-                        if parity[color]==1:
-                            if temp_list[color]!=255:
-                                temp_list[color]+=1
+                    for x in range(3):
+                        if parity[x]==1:
+                            if temp_list[x]!=255:
+                                temp_list[x]+=1
                             else :
-                                temp_list[color]=0
-                    for color in range(3):
-                        if parity[color-1]==1:
-                            if temp_list[color]!=0:
-                                temp_list[color]+=-1
+                                temp_list[x]=0
+                    for x in range(3):
+                        if parity[x-1]==1:
+                            if temp_list[x]!=0:
+                                temp_list[x]+=-1
                             else:
-                                temp_list[color]=255
+                                temp_list[x]=255
                     self.pixels.values[i,j] = tuple(temp_list)
-                    print(self.pixels.values[i,j])
+                    
 
 
 
@@ -252,14 +253,20 @@ if __name__ == '__main__':
     # print("func 1 fonctionne")
 
     test_1 = Encoding("blank.png","new_blank.png","Test")
-    test_2 = Encoding("blank.png","new_blank.png","Test")
-    test_1.func_2_enc(1)
-    for i in range(1):
-        for j in range(1):
-            print(test_1.pixels.values[i,j][0]%2,test_2.pixels.values[i,j][2]%2)
-            assert test_1.pixels.values[i,j][0]%2==test_2.pixels.values[i,j][1]%2
-            assert test_1.pixels.values[i,j][1]%2==test_2.pixels.values[i,j][2]%2
-            assert test_1.pixels.values[i,j][2]%2==test_2.pixels.values[i,j][0]%2
+    vvalues = []
+    for i in range(test_1.pixels.lenght):
+        line = []
+        for j in range(test_1.pixels.height):
+            line.append(test_1.pixels.values[i,j])
+        vvalues.append(line)
+    test_1.func_2_enc(0)
+    for i in range(test_1.pixels.lenght):
+        for j in range(test_1.pixels.height):
+            assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][2]%2
+            assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][0]%2
+            assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][1]%2
+    
+
     print("func_2_enc marche")
 
    
