@@ -352,15 +352,15 @@ if __name__ == '__main__':
     
         
    
-    #assert Decodede_message == im.message
-    #print("putain ca marche ")
+    assert Decodede_message == im.message
+    print("putain ca marche ")
     
     
-    if Decodede_message == im.message:
-        print("putain ca marche ")
+    # if Decodede_message == im.message:
+    #     print("putain ca marche ")
     #else:
         
-    print(im.code_encodage)
+    #print(im.code_encodage)
         # for i in range(len(Decodede_message)):
         #     if Decodede_message[i]!=im.message[i]:
         #         print(i)

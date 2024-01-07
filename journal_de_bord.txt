@@ -47,3 +47,5 @@ Idee de cellule de cryptage:
     -corrections des bugs 
     -test suplementaires et plus extensif
     -code fonctionel sans bug observé
+    -ajout func_2 encodage et decodage
+    -ajout d'un seuil minimum de fonction d'encodage
