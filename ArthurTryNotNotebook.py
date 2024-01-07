@@ -52,12 +52,12 @@ def trans_loop_str(Msglong):
     for lettre in Msglong:
         x = trans_msg_ascII_bin(lettre)
         list_long_bin.append(x)
-    print(list_long_bin)
+    #print(list_long_bin)
     return list_long_bin
 
 #test_trans_loop_str()  ## ça fonctionne 
 
-trans_loop_str("Bonjour Killian")
+#trans_loop_str("Bonjour Killian")
 
 
 
@@ -111,8 +111,10 @@ def change_pixel(bin_Msg, Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2
     Pi2_amount_red_N = Pi2_amount_red + int(bin_Msg_sans_0b[3],2 ) 
     Pi2_amount_green_N = Pi2_amount_green + int(bin_Msg_sans_0b[4],2 ) 
     Pi2_amount_blue_N = Pi2_amount_blue + int(bin_Msg_sans_0b[5],2 ) 
-    Pi3_amount_red_N = Pi3_amount_red + int(bin_Msg_sans_0b[6],2 )
-    
+    if len(bin_Msg_sans_0b) > 6:
+        Pi3_amount_red_N = Pi3_amount_red + int(bin_Msg_sans_0b[6],2 )
+    else:
+        Pi3_amount_red_N = Pi3_amount_red
     Pi3_amount_green_N = Pi3_amount_green
     Pi3_amount_blue_N = Pi3_amount_blue
 
@@ -121,7 +123,7 @@ def change_pixel(bin_Msg, Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2
     New_color_Pi3 = (Pi3_amount_red_N, Pi3_amount_green_N, Pi3_amount_blue_N)
 
     Tuple_results = (New_color_Pi1, New_color_Pi2, New_color_Pi3)
-    print(Tuple_results)
+    #print(Tuple_results, len(bin_Msg_sans_0b))
     return Tuple_results
 
 #test_change_pixel()
@@ -142,6 +144,9 @@ def fonction_J(Msg_entier):
 
 
 def reset_Imart():
+    """
+    comme son nom l'indique, cette fonction reset l'image à sa version vierge
+    """
     imart = Image.new("RGB", (100,100),(250, 250, 250))
     imart.save("imart.png")
     #imart.show()
@@ -149,20 +154,27 @@ def reset_Imart():
 reset_Imart()
 
 def place_le_pixel(fichier_img, Tuple_results, nieme_pix):
+    """
+    Cette fonction prend comme argument le str du nom du fichier png, la tuple qui représente 3 pixels, ces 3 pixels représentent un charactère.
+    En troisième la fonction prend la position du charactère du message initial.
+    """
     imart2 = Image.open(fichier_img)
     imart2.putpixel((nieme_pix, 0), Tuple_results[0])
     imart2.putpixel((nieme_pix, 1), Tuple_results[1])
     imart2.putpixel((nieme_pix, 2), Tuple_results[2])
     #imart2.show()
-    #imart2.close()   
+    imart2.save("imart.png")
+    imart2.close()   
     return imart2
 
 
-nouvel_variable_img = place_le_pixel("imart.png", ((101, 50, 120) , (131, 41, 200) , (180, 40, 160)), 0)
-nouvel_variable_img.show()
+#nouvel_variable_img = place_le_pixel("imart.png", ((101, 50, 120) , (131, 41, 200) , (180, 40, 160)), 0)
+#nouvel_variable_img.show()
 #pixel_value = nouvel_variable_img.getpixel((0,0))
 #print(pixel_value)
     
+
+
 
 
 
