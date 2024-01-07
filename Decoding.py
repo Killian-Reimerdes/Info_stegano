@@ -257,9 +257,9 @@ def Decode(image_name):
     functions =  ["test_func","func_1","func_2"] #ne pas oublieer de mettre a jour
     functions.reverse()
     #print(code_encodage)
-    for color in range(3):
-        for i,func in enumerate(functions):
-            
+
+    for i,func in enumerate(functions):  
+        for color in range(3):      
             if code_encodage[len(functions)-i-1][color]==1:
                    
                    eval(func+"_dec({0})".format("im,"+str(color)))
@@ -299,20 +299,22 @@ if __name__ == '__main__':
     #print("func_1_dec works")
 
     test_1 = Encoding("blank.png","new_blank.png","Test")
+    test_1.code_encodage[2]=[1,0,0]
     vvalues = []
     for i in range(test_1.pixels.lenght):
         line = []
         for j in range(test_1.pixels.height):
             line.append(test_1.pixels.values[i,j])
         vvalues.append(line)
+    test_1.func_2_enc(0)
     func_2_dec(test_1.pixels,0)
     for i in range(test_1.pixels.lenght):
         for j in range(test_1.pixels.height):
             if (i,j)!=(0,0):
-                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][1]%2
-                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][2]%2
-                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][0]%2
-    print("func_2_dec marche")
+                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][0]%2
+                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][1]%2
+                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][2]%2
+    #print("func_2_dec marche")
 
 
 
@@ -322,7 +324,7 @@ if __name__ == '__main__':
     random = ''.join(random.choices(string.ascii_letters + string.digits, k=100000))
     #https://www.javatpoint.com/python-program-to-generate-a-random-string
 
-    im= Encoding("real_Red_square.png","real_newRed_square.png",random)
+    im= Encoding("real_Red_square.png","real_newRed_square.png",bible_first_pages)
     #im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas tjrs avec la bible
 
     im.encode()
@@ -348,11 +350,13 @@ if __name__ == '__main__':
     
     if Decodede_message == im.message:
         print("putain ca marche ")
-    else:
-        for i in range(len(Decodede_message)):
-            if Decodede_message[i]!=im.message[i]:
-                print(i)
-                print(Decodede_message[i],im.message[i])
+    #else:
+        
+    print(im.code_encodage)
+        # for i in range(len(Decodede_message)):
+        #     if Decodede_message[i]!=im.message[i]:
+        #         print(i)
+        #         print(Decodede_message[i],im.message[i])
 
         #print(Decodede_message)
     

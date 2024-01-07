@@ -220,9 +220,8 @@ class Encoding:
         """
         self.message_to_bin()
         self.write_message()
-        
-        for color in range(3):
-            for i,func in enumerate(self.functions):
+        for i,func in enumerate(self.functions):
+            for color in range(3):
                 if self.code_encodage[i][color]==1:
                     eval("self."+func+"_enc("+str(color)+")")
         
