@@ -105,6 +105,13 @@ class Encoding:
                         
 
     def func_2_enc(self,color:int):
+        """
+        Fonction d'encodage qui consite a passer la parite de chaque couleur a la prochaine (pour chaque pixel)
+
+        Args : l'image (self) et couleur (la fonction ne sexecute seulement si color = 0)
+
+        returns : None
+        """
         if color == 0:
             for i in range(self.pixels.lenght):
                 for j in range(self.pixels.height):

@@ -91,6 +91,14 @@ def func_1_dec(im : Pixels,color:int):
                     im.values[i,j] = tuple(temp_list)
 
 def func_2_dec(im:Pixels,x:int):
+    """
+    Inverse de la fonction func_2_enc qui consiste a faire tourner la parite des pixels comme le fait
+    func_2_enc mais dans le sense inverse
+
+    Args: l'image et la couleur(ne s'execute seulement si x = 0)
+
+    Returns : None    
+    """
     if x == 0:
             for i in range(im.lenght):
                 for j in range(im.height):
