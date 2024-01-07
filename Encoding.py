@@ -137,11 +137,18 @@ class Encoding:
                             else :
                                 temp_list[x]=0
                     for x in range(3):
-                        if parity[x-1]==1:
-                            if temp_list[x]!=0:
-                                temp_list[x]+=-1
-                            else:
-                                temp_list[x]=255
+                        if (i+j)%2==1:
+                            if parity[x-1]==1:
+                                if temp_list[x]!=0:
+                                    temp_list[x]+=-1
+                                else:
+                                    temp_list[x]=255
+                        else:
+                            if parity[x-2]==1:
+                                if temp_list[x]!=0:
+                                    temp_list[x]+=-1
+                                else:
+                                    temp_list[x]=255
                     self.pixels.values[i,j] = tuple(temp_list)
                     
 
@@ -275,10 +282,15 @@ if __name__ == '__main__':
     test_1.func_2_enc(0)
     for i in range(test_1.pixels.lenght):
         for j in range(test_1.pixels.height):
-            assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][2]%2
-            assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][0]%2
-            assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][1]%2
-    
+            if (i+j)%2==1:
+                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][2]%2
+                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][0]%2
+                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][1]%2
+            else:
+                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][1]%2
+                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][2]%2
+                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][0]%2
+        
 
     print("func_2_enc marche")
 

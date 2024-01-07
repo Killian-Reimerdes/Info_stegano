@@ -117,11 +117,19 @@ def func_2_dec(im:Pixels,x:int):
                                 else :
                                     temp_list[color]=0
                         for color in range(3):
-                            if parity[color-2]==1:
-                                if temp_list[color]!=0:
-                                    temp_list[color]+=-1
-                                else:
-                                    temp_list[color]=255
+                            if (i+j)%2==1:
+                                if parity[color-2]==1:
+                                    if temp_list[color]!=0:
+                                        temp_list[color]+=-1
+                                    else:
+                                        temp_list[color]=255
+                            else:
+                                if parity[color-1]==1:
+                                    if temp_list[color]!=0:
+                                        temp_list[color]+=-1
+                                    else:
+                                        temp_list[color]=255
+
                         im.values[i,j] = tuple(temp_list)
 
 
