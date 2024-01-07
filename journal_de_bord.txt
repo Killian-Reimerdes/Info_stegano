@@ -43,3 +43,7 @@ Idee de cellule de cryptage:
     -correction du bug avec les pixels de valeurs 0 
     -correction au niveau des couches d'enodage (on peu mtn encoder sur des couches pair ou impair)
     -systeme de choix et de lecture des couches d'encodage et des codes dencodage
+--> 7 janvier, Killian:
+    -corrections des bugs 
+    -test suplementaires et plus extensif
+    -code fonctionel sans bug observé

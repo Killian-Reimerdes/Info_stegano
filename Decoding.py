@@ -44,7 +44,7 @@ def test_func_dec(im : Pixels ,color:int):
 
     Return : None
     """
-    #print("test_func_dec sur",color)
+    
    
     for i in range(im.lenght):
         for j in range(im.height):
@@ -66,7 +66,7 @@ def func_1_dec(im : Pixels,color:int):
     Returns : None
     """
 
-    #print("func_1_dec sur ",color)
+    
 
     for i in range(im.lenght-1,-1,-1):
         for j in range(im.height-1,-1,-1):
@@ -235,7 +235,7 @@ def Decode(image_name):
     
     #passer le message en string
     message = translate_to_text(message_in_binairy)
-    #print(len(message))
+    
     #rend le message
     return message
             
