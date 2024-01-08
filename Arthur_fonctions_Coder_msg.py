@@ -109,7 +109,7 @@ def reset_Imart():
     """
     comme son nom l'indique, cette fonction reset l'image à sa version vierge
     """
-    imart = Image.new("RGB", (100,100),(250, 250, 250))
+    imart = Image.new("RGB", (100,100),(0, 0, 0))
     imart.save("imart.png")
     #imart.show()
     imart.close()
