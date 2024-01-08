@@ -71,6 +71,8 @@ Pour l'ensemble du code nous utilisons des objets de la class Pixels que nous av
 
 Nous avon aussi crée une class Encoding qui n'a pas énormément d'utilité autre que rendre le transfert des variables plus propres. Nous ne l'avons pas fait pour le décodage car les étapes se suivent d'une manière plus linéaire.
 
+Au niveau de la granularité des fonctions, nous avons essayé de faire subdivise par ce que nous considérons des étapes sans non plus en abuser en faisant de fonction qui ne contiennent qu'une seule ligne de code et qui ne vont qu'être utilisé une ou deux fois.
+
 ## Les Fonctions d'Arthur
 
 Les petites fonctions ainsi que tous les tests sont dans le fichier (Arthur_fonctions_Coder_msg.py).
