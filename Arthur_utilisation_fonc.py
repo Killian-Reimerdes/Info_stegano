@@ -40,8 +40,8 @@ def Main_fonc(Message_a_cacher):
 
 Main_fonc("Bonjour Killian")
 
-image = Image.open("imart.png")
-image.show()
+#image = Image.open("imart.png")
+#image.show()
 
 
 #reset_Imart()
