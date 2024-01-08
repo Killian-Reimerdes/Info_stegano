@@ -1,4 +1,5 @@
 from PIL import Image
+
 from Arthur_fonctions_Coder_msg import trans_msg_ascII_bin
 from Arthur_fonctions_Coder_msg import trans_loop_str
 from Arthur_fonctions_Coder_msg import change_pixel
@@ -12,6 +13,10 @@ def test_Main_fonc():
 
 
 def Main_fonc(Message_a_cacher):
+    """
+    Cette fonction principale permet d'assembler toutes les fonctions du fichier Arthur_fonctions_Coder_msg.py.
+    Elle prend comme argument le message (string) qu'on veut cacher et l'encode sur l'image imart.png. 
+    """
     Msglong = Message_a_cacher
     list_long_bin = trans_loop_str(Msglong)
     image = Image.open("imart.png")
@@ -41,4 +46,13 @@ image.show()
 
 #reset_Imart()
 
-
+#Discution :
+#Ces fonctions et méthodes de stéganogrphie n'ont pas été menées jusqu'au boue car l'autre méthode commencé par Killian avait déjà un stade plus avancé. 
+#Ces fonctions peuvent être améliorer de plusieur manières:
+#
+# 1. Pour l'instant la fonction encode seulement sur les trois premières lignes de l'image
+# Il faudrait regarder la largeur de l'image et ajouter en système de retour à la ligne quand le nombre de caractères dans la string est plus grand que le nombre de colonne. 
+#
+# 2. Il faudrait pouvoir utiliser la fonction de Killian qui rend chaque couleur de chaque pixel pair pour qu'on puisse coder sur n'importe quelle image. 
+#
+# 3. Ajouter la fonction pour décoder le message. 
