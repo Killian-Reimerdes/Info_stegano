@@ -2,7 +2,7 @@
 
 ## Résumé
 
-Le but de ce projet est de pouvoir cacher un message dans une image, de pouvoir le récuperer et de rendre ceci le plus complique possible pour quelqun qui ne sait pas comment nous l'avons caché. Pour faire cela nous allons écrire un message dans les valeurs RGB de chaque pixel de l'image, puis utiliser des algorithme qui modifie légèrement ces valeurs pour rendre le message illisble au yeux de ceux qui ne connaissent pas l'algorithme. Mais que nous pouvons encore lire grâce à un algorithme de décodage.
+Le but de ce projet est de pouvoir cacher un message dans une image, de pouvoir le récuperer et de rendre ceci le plus compliqué possible pour quelqun qui ne sait pas comment nous l'avons caché. Pour faire cela nous allons écrire un message dans les valeurs RGB de chaque pixel de l'image, puis utiliser des algorithmes qui modifient légèrement ces valeurs pour rendre le message illisble au yeux de ceux qui ne connaissent pas l'algorithme. Mais que nous pouvons encore lire grâce à un algorithme de décodage.
 
 
 ## Mode d'emploi
@@ -34,26 +34,26 @@ Pour l'encodage:
         - Les fonctions d'encodage : 
             -test_func qui aditionne 1 à la valeur d'une couleur pour chaque pixel
             -func_1 qui aditionne 1 à la valeur d'une couleur pour chaque pixel si la valeur de la même couleur du pixel précedant était impaire
-            -func_2 qui transmet la parité de chaque couleur à une autre, le sens de cette roataion change selon la position du pixel (selon un damier)
+            -func_2 qui transmet la parité de chaque couleur à une autre, le sens de cette rotataion change selon la position du pixel (selon un damier)
         
         - Pose la signature comme valeur du premier pixel
 
-        - Sauvegarde l'image avec son nouceau nom
+        - Sauvegarde l'image avec son nouveau nom
 
 Pour le Décodage :
 
     - la fonction Decode :
         -find-signature : trouve la signature utilisé lors de l'encodage
         -Les fonctions de décodage : font l'inverse de leur homologues d'encodage
-        -extract_message : sort le message en binaire de l'iamge
-        -transalte_to_text : transforme le message binaire en une chaîne de caractères 
+        -extract_message : sort le message en binaire de l'image
+        -translate_to_text : transforme le message binaire en une chaîne de caractères 
 
 
 
 ## Les Algorithmes
 
-Le choix de des fonction utilisées est aléatoire et leur couleur d'application aussi (une fonction peut 
-être aplliquée à plusieurs couleurs), lors du choix chaque couple fonction-couleur a 50% de chance d'être choisi mais il doit y avoir au moins 4 couple choisi sinon le tirage des couples se fera à nouveau.
+Le choix des fonctions utilisées est aléatoire et leur couleur d'application aussi (une fonction peut 
+être appliquée à plusieurs couleurs), lors du choix chaque couple fonction-couleur a 50% de chance d'être choisi mais il doit y avoir au moins 4 couples choisi sinon le tirage des couples se fera à nouveau.
 
 Chaque fonction prend en argument l'image et une couleur.
 
@@ -69,9 +69,9 @@ func_2 : Si la couleur donnée en argument est 0, fait tourner la parité des va
 Pour l'ensemble du code nous utilisons des objets de la class Pixels que nous avons crée, cela nous simplifie la plus part des opération sur la valeur des pixels. Cette class aurait pu 
 être un plus complète, notament avec une fonction ajouter 1 à la valeur d'une couleur d'un pixel et son homologue pour la soustraction, ce qui aurait simplifié le code à plusieurs reprise (de même pour une fonction qui regarde la partié d'une valeur).
 
-Nous avon aussi crée une class Encoding qui n'a pas énormément d'utilité autre que rendre le transfert des variables plus propres. Nous ne l'avons pas fait pour le décodage car les étapes se suivent d'une manière plus linéaire.
+Nous avons aussi crée une class Encoding qui n'a pas énormément d'utilité autre que rendre le transfert des variables plus propres. Nous ne l'avons pas fait pour le décodage car les étapes se suivent d'une manière plus linéaire.
 
-Au niveau de la granularité des fonctions, nous avons essayé de faire subdivise par ce que nous considérons des étapes sans non plus en abuser en faisant de fonction qui ne contiennent qu'une seule ligne de code et qui ne vont qu'être utilisé une ou deux fois.
+Au niveau de la granularité des fonctions, nous avons essayé de faire subdivise par ce que nous considérons des étapes sans non plus en abuser en faisant des fonctions qui ne contiennent qu'une seule ligne de code et qui ne vont qu'être utilisé une ou deux fois.
 
 ## Les Fonctions d'Arthur
 
@@ -162,4 +162,6 @@ La fonction "Main_fonc" prend comme argument le message que l'on veut cacher (st
 
 -- > 8 janvier, Arthur:
     -Fichier README
+    -corrections
+    -ajouter docstring
         
