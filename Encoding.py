@@ -1,9 +1,10 @@
 from Pixels import Pixels
 from random import randint
+import copy
 
 
 class Encoding:
-    def __init__(self,image_name,new_image_name,message):
+    def __init__(self,image_name,new_image_name="Ton_Image_avec1_Message.png", message="Ton pote il a oublié de mettre un message"):
         
         #message à cacher dans l'image
         self.message = message
@@ -14,7 +15,7 @@ class Encoding:
         self.pixels = Pixels(image_name)
         #decide si on encode sur une base pair ou impair (une valuer par couleur)
         self.encode_layer = [randint(0,1)for i in range(3)]
-        #self.encode_layer = [0,0,0]
+        
         #met tout nos pixel a la valuer pair ou impair voulu
         for i in range(3):
             if self.encode_layer[i]==1:
@@ -24,10 +25,17 @@ class Encoding:
 
 
         #liste de toute les cellules d'encodage possible
-        self.functions =["test_func","func_1"]  
+        self.functions =["test_func","func_1","func_2"]  
         #decide quel module d'encryptage vont etre utiliser (1 veut dire que le module est utilise)
         self.code_encodage = [[randint(0,1) for j in range(3)] for i in range(len(self.functions))]
-        #self.code_encodage = [[0,0,0],[1,0,0]]
+        z=0
+        while z<4:
+            z = 4
+            for i in range(len(self.functions)):
+                for j in range(3):
+                    if self.code_encodage[i][j]==1:
+                        z += 1
+        
         
         
          #ecrit les parametere d'enodage
@@ -58,7 +66,7 @@ class Encoding:
         
     def test_func_enc(self,color:int):
         """
-        FOnction d'encodage qui consiste a additione 1 a la valeur de chaque pixel sur une couleur
+        Fonction d'encodage qui consiste a additione 1 a la valeur de chaque pixel sur une couleur
 
         Args : l'image (self) et la couleur (int entre 0 et 2)
 
@@ -77,7 +85,7 @@ class Encoding:
     
     def func_1_enc(self,color:int):
         """
-        Fonction d'encodage qui consiste a additioner un a la valeur d'uen couleur de chauqe pixel 
+        Fonction d'encodage qui consiste a additioner un 1 a la valeur d'uen couleur de chauqe pixel 
         qui est preceder d'un pixel ayant une valeur impaire pour cette couleur
 
         Args : l'image (self) et la couleur (int entre 0 et 2)
@@ -102,6 +110,49 @@ class Encoding:
                         if self.pixels.values[i,j][color]%2 < 0.1 :
                             last_value = 0
                         
+
+    def func_2_enc(self,color:int):
+        """
+        Fonction d'encodage qui consite a passer la parite de chaque couleur a la prochaine (pour chaque pixel)
+
+        Args : l'image (self) et couleur (la fonction ne sexecute seulement si color = 0)
+
+        returns : None
+        """
+        if color == 0:
+            for i in range(self.pixels.lenght):
+                for j in range(self.pixels.height):
+                    
+                    temp_list= list(self.pixels.values[i,j])
+                    parity = []
+                    for color in range(3):
+                        if temp_list[color]%2 == 0:
+                            parity.append(0)
+                        else:
+                            parity.append(1)
+                    for x in range(3):
+                        if parity[x]==1:
+                            if temp_list[x]!=255:
+                                temp_list[x]+=1
+                            else :
+                                temp_list[x]=0
+                    for x in range(3):
+                        if (i+j)%2==1:
+                            if parity[x-1]==1:
+                                if temp_list[x]!=0:
+                                    temp_list[x]+=-1
+                                else:
+                                    temp_list[x]=255
+                        else:
+                            if parity[x-2]==1:
+                                if temp_list[x]!=0:
+                                    temp_list[x]+=-1
+                                else:
+                                    temp_list[x]=255
+                    self.pixels.values[i,j] = tuple(temp_list)
+                    
+
+
 
     def message_to_bin(self):
         """
@@ -128,7 +179,7 @@ class Encoding:
         """
        
 
-        #ecrit le message
+        
         if self.message_bin != []:
             if len(self.message)>=(self.pixels.height * self.pixels.lenght * 3):
                 print("message too long")
@@ -183,9 +234,8 @@ class Encoding:
         """
         self.message_to_bin()
         self.write_message()
-        
-        for color in range(3):
-            for i,func in enumerate(self.functions):
+        for i,func in enumerate(self.functions):
+            for color in range(3):
                 if self.code_encodage[i][color]==1:
                     eval("self."+func+"_enc("+str(color)+")")
         
@@ -201,26 +251,48 @@ class Encoding:
 if __name__ == '__main__':
     #test ne fonctionne plus a cause des fonctionalite ajouter apres coup
     
-    #test ecriture
-    enc = Encoding("blank.png","new_blank.png","Test")
-    assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
-    print("message_to_bin marche")
-    enc.write_message()
-    encoeded_message = [255,0,255,0,255,0,255,255,255,0,0,255,255,0,255,0,255,0,0,0,255,255,0,0,255,0,0,0,255,0,255,255]
-    for i in range(32):
-        assert enc.pixels.values[i+1,0][0]==encoeded_message[i]
+    # #test ecriture
+    # enc = Encoding("blank.png","new_blank.png","Test")
+    # assert enc.message_to_bin()==['0b1010100','0b1100101','0b1110011','0b1110100']
+    # print("message_to_bin marche")
+    # enc.write_message()
+    # encoeded_message = [255,0,255,0,255,0,255,255,255,0,0,255,255,0,255,0,255,0,0,0,255,255,0,0,255,0,0,0,255,0,255,255]
+    # for i in range(32):
+    #     assert enc.pixels.values[i+1,0][0]==encoeded_message[i]
     
-    print("l'ecriture marche ")
+    # print("l'ecriture marche ")
     
     
 
-    enc.func_1_enc(0)
-    for i in range(32):
-        #print(enc.pixels.values[i,0])
-        assert enc.pixels.values[i+1,0][0]== [255,0,0,1,255,0,0,0,0,1,0,0,0,1,255,0,0,1,0,1,255,255,0,1,255,0,1,0,0,1,255,255][i]
+    # enc.func_1_enc(0)
+    # for i in range(32):
+    #     #print(enc.pixels.values[i,0])
+    #     assert enc.pixels.values[i+1,0][0]== [255,0,0,1,255,0,0,0,0,1,0,0,0,1,255,0,0,1,0,1,255,255,0,1,255,0,1,0,0,1,255,255][i]
                                            
        
-    print("func 1 fonctionne")
+    # print("func 1 fonctionne")
+
+    test_1 = Encoding("blank.png","new_blank.png","Test")
+    vvalues = []
+    for i in range(test_1.pixels.lenght):
+        line = []
+        for j in range(test_1.pixels.height):
+            line.append(test_1.pixels.values[i,j])
+        vvalues.append(line)
+    test_1.func_2_enc(0)
+    for i in range(test_1.pixels.lenght):
+        for j in range(test_1.pixels.height):
+            if (i+j)%2==1:
+                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][2]%2
+                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][0]%2
+                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][1]%2
+            else:
+                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][1]%2
+                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][2]%2
+                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][0]%2
+        
+
+    print("func_2_enc marche")
 
    
     

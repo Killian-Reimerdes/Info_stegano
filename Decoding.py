@@ -44,7 +44,7 @@ def test_func_dec(im : Pixels ,color:int):
 
     Return : None
     """
-    #print("test_func_dec sur",color)
+    
    
     for i in range(im.lenght):
         for j in range(im.height):
@@ -66,7 +66,7 @@ def func_1_dec(im : Pixels,color:int):
     Returns : None
     """
 
-    #print("func_1_dec sur ",color)
+    
 
     for i in range(im.lenght-1,-1,-1):
         for j in range(im.height-1,-1,-1):
@@ -89,6 +89,51 @@ def func_1_dec(im : Pixels,color:int):
                     else:
                         temp_list[color]=255
                     im.values[i,j] = tuple(temp_list)
+
+def func_2_dec(im:Pixels,x:int):
+    """
+    Inverse de la fonction func_2_enc qui consiste a faire tourner la parite des pixels comme le fait
+    func_2_enc mais dans le sense inverse
+
+    Args: l'image et la couleur(ne s'execute seulement si x = 0)
+
+    Returns : None    
+    """
+    if x == 0:
+            for i in range(im.lenght):
+                for j in range(im.height):
+                    if (i,j)!=(0,0):
+                        temp_list= list(im.values[i,j])
+                        parity = []
+                        for color in range(3):
+                            if temp_list[color]%2 == 0:
+                                parity.append(0)
+                            else:
+                                parity.append(1)
+                        for color in range(3):
+                            if parity[color]==1:
+                                if temp_list[color]!=255:
+                                    temp_list[color]+=1
+                                else :
+                                    temp_list[color]=0
+                        for color in range(3):
+                            if (i+j)%2==1:
+                                if parity[color-2]==1:
+                                    if temp_list[color]!=0:
+                                        temp_list[color]+=-1
+                                    else:
+                                        temp_list[color]=255
+                            else:
+                                if parity[color-1]==1:
+                                    if temp_list[color]!=0:
+                                        temp_list[color]+=-1
+                                    else:
+                                        temp_list[color]=255
+
+                        im.values[i,j] = tuple(temp_list)
+
+
+
 
 
 """
@@ -217,12 +262,12 @@ def Decode(image_name):
     
 
     #appliquer les foncdtion de decodage
-    functions =  ["test_func","func_1"] #ne pas oublieer de mettre a jour
+    functions =  ["test_func","func_1","func_2"] #ne pas oublieer de mettre a jour
     functions.reverse()
     #print(code_encodage)
-    for color in range(3):
-        for i,func in enumerate(functions):
-            
+
+    for i,func in enumerate(functions):  
+        for color in range(3):      
             if code_encodage[len(functions)-i-1][color]==1:
                    
                    eval(func+"_dec({0})".format("im,"+str(color)))
@@ -235,7 +280,7 @@ def Decode(image_name):
     
     #passer le message en string
     message = translate_to_text(message_in_binairy)
-    #print(len(message))
+    
     #rend le message
     return message
             
@@ -261,6 +306,24 @@ if __name__ == '__main__':
     assert message == message2
     #print("func_1_dec works")
 
+    test_1 = Encoding("blank.png","new_blank.png","Test")
+    test_1.code_encodage[2]=[1,0,0]
+    vvalues = []
+    for i in range(test_1.pixels.lenght):
+        line = []
+        for j in range(test_1.pixels.height):
+            line.append(test_1.pixels.values[i,j])
+        vvalues.append(line)
+    test_1.func_2_enc(0)
+    func_2_dec(test_1.pixels,0)
+    for i in range(test_1.pixels.lenght):
+        for j in range(test_1.pixels.height):
+            if (i,j)!=(0,0):
+                assert test_1.pixels.values[i,j][0]%2==vvalues[i][j][0]%2
+                assert test_1.pixels.values[i,j][1]%2==vvalues[i][j][1]%2
+                assert test_1.pixels.values[i,j][2]%2==vvalues[i][j][2]%2
+    #print("func_2_dec marche")
+
 
 
     #test du systeme complet
@@ -269,14 +332,14 @@ if __name__ == '__main__':
     random = ''.join(random.choices(string.ascii_letters + string.digits, k=100000))
     #https://www.javatpoint.com/python-program-to-generate-a-random-string
 
-    im= Encoding("real_Red_square.png","real_newRed_square.png",random)
+    im= Encoding("real_Red_square.png","real_newRed_square.png",message=bible_first_pages)
     #im= Encoding("blank.png","newblank.png",bible_first_pages) # fonction pas tjrs avec la bible
 
     im.encode()
     im.pixels.save_image(im.new_name)
     
     assert find_signature(Pixels(im.new_name))[0]==im.encode_layer
-    assert find_signature(Pixels(im.new_name))[1][:2]==im.code_encodage
+    assert find_signature(Pixels(im.new_name))[1][:len(im.functions)]==im.code_encodage
     #print("signature found")
 
         
@@ -289,17 +352,19 @@ if __name__ == '__main__':
     
         
    
-    #assert Decodede_message == im.message
-    #print("putain ca marche ")
+    assert Decodede_message == im.message
+    print("putain ca marche ")
     
     
-    if Decodede_message == im.message:
-        print("putain ca marche ")
-    else:
-        for i in range(len(Decodede_message)):
-            if Decodede_message[i]!=im.message[i]:
-                print(i)
-                print(Decodede_message[i],im.message[i])
+    # if Decodede_message == im.message:
+    #     print("putain ca marche ")
+    #else:
+        
+    #print(im.code_encodage)
+        # for i in range(len(Decodede_message)):
+        #     if Decodede_message[i]!=im.message[i]:
+        #         print(i)
+        #         print(Decodede_message[i],im.message[i])
 
         #print(Decodede_message)
     

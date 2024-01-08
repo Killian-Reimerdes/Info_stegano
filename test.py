@@ -36,3 +36,8 @@ print([randint(0,1)for i in range(3)])
 
 print(blank.height,blank.lenght)
 
+
+parity = [0,0,1]
+for i in range(3):
+    print(parity[i-1])
+print(True or True)
