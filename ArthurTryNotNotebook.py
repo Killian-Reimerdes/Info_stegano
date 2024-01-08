@@ -172,8 +172,9 @@ def place_le_pixel(fichier_img, Tuple_results, nieme_pix):
 #nouvel_variable_img.show()
 #pixel_value = nouvel_variable_img.getpixel((0,0))
 #print(pixel_value)
-    
 
+image = Image.open(fichier_img)
+image.load("imart.png")
 
 
 
