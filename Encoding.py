@@ -30,7 +30,7 @@ class Encoding:
         self.code_encodage = [[randint(0,1) for j in range(3)] for i in range(len(self.functions))]
         z=0
         while z<4:
-            z = 4
+            z = 0
             for i in range(len(self.functions)):
                 for j in range(3):
                     if self.code_encodage[i][j]==1:

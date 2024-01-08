@@ -17,11 +17,55 @@ Pour extraire le message d'une image :
     -Exécuter le fichier Decode_un_message.py 
     - Donner le nom de l'image dont vous voulez extraire l'image
 
-### 
+### Fonctions principales
+
+Pour l'encodage:
+
+    - L'initialisation de la class Encoding:
+        -Génère aléatoirement un code d'encodage (clé définissant quelles fonctions vont être utilisées sur quelles couches) et une clé pour les couches d'encodage (qui définit si on écrit sur une couche paire ou impaire pour chaque couleur).
+        -Prépare pour l'écriture en mettant toutes les valeurs d'une couche à la même parité (tous pair ou impair dépendant de la clé).
+        -Création d'une signature : clé sous forme de couleur qui contient la clé pour les couches d'encodage et le code d'encodage.
+
+    -La fonction Encode:
+         -message_to-bin : transforme le message d'une chaîne de caractères à du binaire (suite de 0 et de 1)
+
+        -write_message : écrit le message en binaire sur l'image en aditionant le binaire au valeur des pixels
+
+        - Les fonctions d'encodage : 
+            -test_func qui aditionne 1 à la valeur d'une couleur pour chaque pixel
+            -func_1 qui aditionne 1 à la valeur d'une couleur pour chaque pixel si la valeur de la même couleur du pixel précedant était impaire
+            -func_2 qui transmet la parité de chaque couleur à une autre, le sens de cette roataion change selon la position du pixel (selon un damier)
+        
+        - Pose la signature comme valeur du premier pixel
+
+        - Sauvegarde l'image avec son nouceau nom
+
+Pour le Déodage :
+
+    - la fonction Decode :
+        -find-signature : trouve la signature utilisé lors de l'encodage
+        -Les fonctions de decodage : font l'inverse de leur homologues d'encodage
+        -extract_message : sort le message en binaire de l'iamge
+        -transalte_to_text : transforme le message binaire en une chaîne de caractères 
+
+
 
 ## Les ALgorithmes
 
+Le choix de des fonction utilisées est aléatoire et leur couleur d'application aussi (une fonction peut 
+être aplliquée à plusieurs couleurs), lors du choix chaque couple fonction-couleur a 50% de chance d'être choisi mais il doit y avoir au moins 4 couple choisi sinon le tirage des couples se fera à nouveau.
+
+Chaque fonction prend en argument l'image et une couleur.
+
+test_func : Ajoute 1 à la valeur de la couleur donnée en argument de chaque pixel.
+
+func_1 : Pour chaque pixel ajoute 1 à la valeur de la couleur donnée en argument si la valeur du pixel précedant était impaire (parcouru par colonne de haut en bas et de droite à gauche).
+
+func_2 : Si la couleur donnée en argument est 0, fait tourner la parité des valeurs des couleurs entre elles, pour chaque pixel. Le sens de la rotation dépend de la position du pixel, si la somme des numéros de sa colonne et de sa ligne est paire, le sens de roation est R -> B -> G -> R et l'invere si la somme est impaire.
+
 ##  Implémentation Technique
+
+
 
 ## Journal de Bord 
 
