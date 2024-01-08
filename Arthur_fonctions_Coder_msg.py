@@ -1,18 +1,5 @@
 from PIL import Image
 
-#imart = Image.new("RGB", (100,100),(100, 200, 15)) #tout doit être des tuples
-#size = imart.size
-#color = imart.mode
-#print(imart.mode)
-#print(imart.format) ##format je devrais mettre png
-#imart.save("ImartYes.png")
-##changement 
-
-
-
-
-
-
 
 def test_trans_msg_ascII_bin():
     assert trans_msg_ascII_bin("a") == "0b1100001"
@@ -34,7 +21,6 @@ def trans_msg_ascII_bin(Msg): #"hello"
 
 
 #test_trans_msg_ascII_bin()
-## je dois ajouter quelque part un if qui vérifie si le caractere appartient à ascii
 
 
 def test_trans_loop_str():
@@ -56,25 +42,7 @@ def trans_loop_str(Msglong):
     return list_long_bin
 
 #test_trans_loop_str()  ## ça fonctionne 
-
 #trans_loop_str("Bonjour Killian")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -130,17 +98,11 @@ def change_pixel(bin_Msg, Pi1_amount_red, Pi1_amount_green, Pi1_amount_blue, Pi2
 
 #change_pixel("0b1001100",P1_amount_red, P1_amount_green, P1_amount_blue, P2_amount_red, P2_amount_green, P2_amount_blue, P3_amount_red, P3_amount_green, P3_amount_blue)
 
-def test_fonction_J():
-    assert fonction_J("salut") == ['0b1110011', '0b1100001', '0b1101100', '0b1110101', '0b1110100']
-    print("la fonction_J fonction")         #Cettre fonction sert un peu à rien
+#def test_fonction_J():
+#    assert fonction_J("salut") == ['0b1110011', '0b1100001', '0b1101100', '0b1110101', '0b1110100']
+#    print("la fonction_J fonction")         #Cettre fonction sert un peu à rien
 
-def fonction_J(Msg_entier):
-    code_binaire = trans_loop_str(Msg_entier)
-    return code_binaire                 #Cette fonction sert un peu à rien
 
-#fonction_J("salut")
-    #for i in range(len(Msg_entier))
-#test_fonction_J()
 
 
 def reset_Imart():
@@ -173,8 +135,8 @@ def place_le_pixel(fichier_img, Tuple_results, nieme_pix):
 #pixel_value = nouvel_variable_img.getpixel((0,0))
 #print(pixel_value)
 
-image = Image.open(fichier_img)
-image.load("imart.png")
+#image = Image.open(fichier_img)
+
 
 
 

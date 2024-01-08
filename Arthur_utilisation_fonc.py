@@ -1,9 +1,9 @@
 from PIL import Image
-from ArthurTryNotNotebook import trans_msg_ascII_bin
-from ArthurTryNotNotebook import trans_loop_str
-from ArthurTryNotNotebook import change_pixel
-from ArthurTryNotNotebook import reset_Imart
-from ArthurTryNotNotebook import place_le_pixel
+from Arthur_fonctions_Coder_msg import trans_msg_ascII_bin
+from Arthur_fonctions_Coder_msg import trans_loop_str
+from Arthur_fonctions_Coder_msg import change_pixel
+from Arthur_fonctions_Coder_msg import reset_Imart
+from Arthur_fonctions_Coder_msg import place_le_pixel
 
 def test_Main_fonc():
     Main_fonc("Bon")
